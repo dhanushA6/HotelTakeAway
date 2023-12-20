@@ -14,7 +14,8 @@ def load_menus():
         print(f"Error loading menus: {e}")
     return menus
 
-def get_menu_items(menus, menu_type):
+def get_menu_items(menu_type):
+    menus = load_menus()
     if menu_type not in menus:
         return False
     menu = menus[menu_type.capitalize()]
