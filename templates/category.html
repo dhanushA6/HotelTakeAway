@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container my-5">
+    <label class="fs-5 mb-3"><a href="/" class="text-decoration-none text-body-tertiary">Home</a> - <a href="/checkout/review"
+            class="text-decoration-none text-body">Category</a></label>
+    <h4 class="fw-semibold display-6">Category- {{name}}</h4>
+    <div class="mb-4">
+        <p class="lead text-muted">List of items for {{name|lower}}.</p>
+    </div>
+    {{name}}
+</div>
+{% endblock %}
