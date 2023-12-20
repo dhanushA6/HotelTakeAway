@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import random
-from payment import *
-from  menu import *
+from model.payment import *
+from model.menu import *
 
 # Placeholder function for generating a unique token
 def generate_unique_token():

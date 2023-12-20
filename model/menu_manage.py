@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from menu import MenuItem 
+from model.menu import MenuItem 
 
 
 # Abstract Factory Method for Menu Creation

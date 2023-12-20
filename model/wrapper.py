@@ -1,5 +1,5 @@
-from menu_manage import *
-from order_manage import *
+from model.menu_manage import *
+from model.order_manage import *
 import pickle
 
 

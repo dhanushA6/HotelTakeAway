@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import model.wrapper as wp
 
 app = Flask(__name__)
 
@@ -8,7 +9,8 @@ def index():
 
 @app.route('/category/<name>', methods=['GET', 'POST'])
 def category(name):
-    return render_template('category.html', page_name="Category", name=name.capitalize())
+    items = wp.get_menu_items(name)
+    return render_template('category.html', page_name="Category", name=name.capitalize(), items=items)
 
 @app.route('/cart')
 def cart():
