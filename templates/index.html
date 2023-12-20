@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container my-5">
+    <div class="row flex-lg-row-reverse align-items-center bg-body-tertiary my-5 p-5 g-3 rounded-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="{{ url_for('static', filename='cover.svg') }}" class="d-block mx-lg-auto img-fluid" alt="" width="500" height="400" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+            <h4 class="display-5 mb-3">Hello {{userData[1]}}!</h4>
+            <p class="fs-4"><label class="ms-5"></label>Dive into a personalized shopping experience with Eazycart. Discover exclusive deals and tailored recommendations just for you. Your one-stop destination for seamless shopping. Don't miss out on member-only perks
+                and special offers - because you deserve the best. Happy browsing!</p>
+        </div>
+    </div>
+    <h3 class="fw-normal fs-3">Store</h3>
+    <hr class="mb-4">
+    <div class="row gx-3 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for p in products %}
+
+        <div class="col mb-3">
+            <div class="card h-100 border shadow">
+                <img class="img-fluid h-50 rounded" src="{{ url_for('static', filename='products/' + p[6]) }}" alt="{{p[6]}}">
+                <div class="card-body px-4">
+                    <div class="text-center">
+                        <h5 class="fw-bold">{{p[1]}}</h5>
+                        <p class="fw-semibold">Price: ₹{{p[2]}}</p>
+                        <label class="text-start">{{p[4]}}</label>
+                    </div>
+                </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    {% if p[3] > 15: %}
+                    <label class="text-success">In stock</label> {% elif p[3]
+                    < 15: %} <label class="text-danger">Only {{p[3]}} stocks left!</label>
+                        {% else: %}
+                        <label class="text-danger">Out of stock!</label> {% endif %}
+                        <p class="text-start mt-2">Category: <label class="fw-semibold">{{p[5]}}</label></p>
+                        <div class="d-flex">
+                            {% if p[0] in inCart %}
+                            <a role="button" class="btn btn-secondary btn-add-cart w-100" data-id="{{p[0]}}"><i class="bi bi-check2 me-2"></i>Added to cart</a> {% else %}
+                            <a role="button" class="btn btn-outline-secondary btn-add-cart w-100" data-id="{{p[0]}}">
+                                <i class="bi bi-cart-plus me-2"></i>Add to cart</a> {% endif %}
+                        </div>
+                        {% if p[0] in wish %}
+                        <a role="button" class="btn btn-secondary btn-add-wishlist d-block mt-2" data-id="{{p[0]}}"><i class="bi bi-suit-heart-fill me-2"></i>Added to Wishlist</a> {% else %}
+                        <a role="button" class="btn btn-outline-secondary btn-add-wishlist d-block mt-2" data-id="{{p[0]}}"><i
+                                    class="bi bi-suit-heart me-2"></i>Add to Wishlist</a> {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <img src="{{ url_for('static', filename='eazycart-logo.svg') }}" width="30" height="24">
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 Eazycart, Inc</span>
+        </div>
+    </footer>
+</div>
+
+
+{% endblock %}

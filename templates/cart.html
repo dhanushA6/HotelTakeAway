@@ -1,0 +1,128 @@
+{% extends 'base.html' %} {% block body %}
+
+<div class="container my-5">
+    <label class="fs-5 mb-3"><a href="/" class="text-decoration-none text-body-tertiary">Home</a> - <a href="/cart" class="text-decoration-none text-body">Shopping Cart</a></label>
+    <h4 class="fw-semibold display-6">Shopping Cart</h4>
+    <div>
+        <p class="lead text-muted">You have {{cartItems|length}} items in your cart.</p>
+    </div>
+    <div class="mb-5 row">
+        <div class="pe-xl-5 {% if cartItems|length == 0 %}col-lg-12 my-5{% else %} col-lg-8 {% endif %}">
+            <div class="cart mb-5">
+                <div class="cart-body">
+                    {% if cartItems|length > 0 %}
+                    <label class="form-text">Update cart after making changes!</label>
+                    <hr> {% endif %} {% for item in cartItems: %}
+                    <div class="cart-item my-3" data-product-id="{{item[0]}}">
+                        <div class="d-flex align-items-center text-start text-md-center row">
+                            <div class="col-md-5 col-12 product-info-section">
+                                <a class="cart-remove close mt-3 d-md-none" href="#"></a>
+                                <div class="d-flex align-items-center">
+                                    <a href="/products/{{item[0]}}"><img alt="{{item[6]}}" src="{{ url_for('static', filename='products/' + item[6]) }}" width="80"> </a>
+                                    <div class="cart-title text-start ms-3">
+                                        <a class="text-body text-decoration-none" href="/products/{{item[0]}}"><strong class="product-name">{{item[1]}}</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 mt-md-0 col-md-7 col-12 product-price-section">
+                                <div class="align-items-center row">
+                                    <div class="col-md-3 price-per-item-section">
+                                        <div class="row">
+                                            <div class="d-md-none text-muted col-6">Price per item</div>
+                                            <div class="text-end text-md-center col-md-12 col-6">₹ <label class="price-per-item">{{item[2]}}</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 quantity-section">
+                                        <div class="align-items-center row">
+                                            <div class="text-muted d-md-none col-sm-9 col-7">Quantity</div>
+                                            <div class="col-md-12 col-sm-3 col-5">
+                                                <div class="d-flex align-items-center">
+                                                    <button type="button" class="items-decrease btn btn-items">-</button> {% for i in inCart: %} {% if i[2] == item[0] %}
+                                                    <label class="text-center border-0 border-md product-quantity form-control" data-max="{{item[3]}}">{{i[3]}}</label> {% endif %} {% endfor %}
+                                                    <button type="button" class="items-increase btn btn-items">+</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 total-price-section">
+                                        <div class="row">
+                                            <div class="d-md-none text-muted col-6">Total price</div>
+                                            <div class="text-end text-md-center col-md-12 col-6">
+                                                {% for i in inCart: %} {% if i[2] == item[0] %} ₹
+                                                <label class="total-item-price">{{item[2]*i[3]}}</label> {% endif %} {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-none d-md-block text-center col-2">
+                                        <a role="button" class="remove-from-cart text-muted btn" data-id="{{item[0]}}"><i class="bi bi-x"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    {% endfor %} {% if cartItems|length == 0 %}
+                    <div class="my-3">
+                        <div class="d-flex align-items-center justify-content-center mb-3">
+                            <div class="empty-cart text-body-tertiary">
+                                <i class="bi bi-cart-x display-1"></i>
+                            </div>
+                            <div class="empty-cart-info text-body-tertiary ms-3 mt-3">
+                                <h4 class="fw-normal mb-1">Cart is empty</h4>
+                                <p class="lead">Add items to your cart!</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center mt-4">
+                            <a role="button" class="btn btn-sm btn-outline-secondary rounded-0" href="/"><i class="bi bi-arrow-left me-2"></i>Continue shopping</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if cartItems|length > 0 %}
+        <div class="col-lg-4">
+            <div class="mb-5 card shadow">
+                <div class="card-header">
+                    <h6 class="my-2">Order Summary</h6>
+                </div>
+                <div class="py-4 card-body">
+                    <p class="text-muted text-sm">Shipping and additional costs are calculated based on values you have entered.
+                    </p>
+                    <table class="table card-text">
+                        <tbody>
+                            <tr>
+                                <th class="py-4">Order Subtotal </th>
+                                <td class="py-4 text-end text-muted">₹<label class="cart-subtotal">{{cart_total}}</label></td>
+                            </tr>
+                            <tr>
+                                <th class="py-4">Shipping and handling</th>
+                                <td class="py-4 text-end text-muted">₹<label class="cart-shipping-cost">10.00</label></td>
+                            </tr>
+                            <tr>
+                                <th class="py-4">Tax</th>
+                                <td class="py-4 text-end text-muted">₹0.00</td>
+                            </tr>
+                            <tr>
+                                <th class="pt-4 border-0">Total</th>
+                                <td class="pt-4 border-0 text-end h3 fw-normal text-nowrap">₹<label class="cart-total">{{cart_total + 10}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between">
+                <a role="button" tabindex="0" href="/" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Continue Shopping</a>
+                <div>
+                    <button role="button" tabindex="0" href="#" class="btn btn-primary btn-update-cart"><i class="bi bi-arrow-repeat me-2"></i>Update cart</button>
+                    <a role="button" tabindex="0" href="/checkout" class="btn btn-primary">Checkout<i class="bi bi-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

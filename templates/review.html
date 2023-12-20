@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container my-5">
+    <label class="fs-5 mb-3"><a href="/" class="text-decoration-none text-body-tertiary">Home</a> - <a href="/checkout/review"
+            class="text-decoration-none text-body">Order Review</a></label>
+    <h4 class="fw-semibold display-6">Order Review</h4>
+    <div class="mb-4">
+        <p class="lead text-muted">Please review your order.</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr class="fs-5 text-start">
+                            <th class="fw-normal text-sm-center" scope="col">Item</th>
+                            <th class="fw-normal text-sm-center" scope="col">Price</th>
+                            <th class="fw-normal text-sm-center" scope="col">Quantity</th>
+                            <th class="fw-normal text-sm-center" scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for p in products %}
+                        <tr class="text-center">
+                            <th class="text-start mx-3" scope="row">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img alt="{{p[6]}}" src="{{ url_for('static', filename='products/' + p[6]) }}" width="80" height="80">
+                                    </div>
+                                    <div class="col-md-8 col-sm-3 my-auto text-start text-wrap">
+                                        <label class="my-auto">{{p[1]}}</label>
+                                    </div>
+                                </div>
+                            </th>
+                            <td class="text-nowrap">₹ {{p[2]}}</td>
+                            <td>
+                                {% for q in qty %} {% if q[2] == p[0] %} {{q[3]}} {% endif %} {% endfor %}
+                            </td>
+                            <td class="text-nowrap">
+                                {% for q in qty %} {% if q[2] == p[0] %}₹ {{ p[2] * q[3]}} {% endif %} {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="mb-5 card shadow">
+                <div class="card-header">
+                    <h6 class="my-2">Order Summary</h6>
+                </div>
+                <div class="py-4 card-body">
+                    <p class="text-muted text-sm">Shipping and additional costs are calculated based on values you have entered.
+                    </p>
+                    <table class="table card-text">
+                        <tbody>
+                            <tr>
+                                <th class="py-4">Order Subtotal </th>
+                                <td class="py-4 text-end text-muted">₹<label class="cart-subtotal">{{order_total}}</label></td>
+                            </tr>
+                            <tr>
+                                <th class="py-4">Shipping and handling</th>
+                                <td class="py-4 text-end text-muted">₹<label class="cart-shipping-cost">10.00</label></td>
+                            </tr>
+                            <tr>
+                                <th class="py-4">Tax</th>
+                                <td class="py-4 text-end text-muted">₹0.00</td>
+                            </tr>
+                            <tr>
+                                <th class="pt-4 border-0">Total</th>
+                                <td class="pt-4 border-0 text-end h3 fw-normal text-nowrap">₹<label class="cart-total">{{order_total + 10}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="/checkout" class="btn btn-primary" type="button"><i class="bi bi-arrow-left me-2"></i>Back to checkout</a>
+                <form action="/checkout/confirmed" method="post">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-cart-check me-2"></i>Place order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

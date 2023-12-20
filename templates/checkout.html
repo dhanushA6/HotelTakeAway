@@ -1,0 +1,125 @@
+{% extends 'base.html' %} {% block body %}
+
+<div class="container my-5">
+    <label class="fs-5 mb-3"><a href="/" class="text-decoration-none text-body-tertiary">Home</a> - <a href="/checkout" class="text-decoration-none text-body">Checkout</a></label>
+    <h4 class="fw-semibold display-6">Checkout</h4>
+    <div class="mb-4">
+        <p class="lead text-muted">Please fill in your details below.</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 mb-3">
+            <div class="card shadow px-3 py-4">
+                <form id="checkout-form" class="row">
+                    <div class="customer-details mb-3">
+                        <h5 class="fw-normal">Invoice Address</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="invoice-street" class="form-label">Street</label>
+                                <input type="text" class="form-control" id="invoice-street">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="invoice-city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="invoice-city">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="invoice-country" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="invoice-country">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="zip-code" class="form-label">Zip code</label>
+                                <input type="number" class="form-control" id="zip-code">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="delivery-method mb-3">
+                        <h5 class="fw-normal mt-2 mb-3">Delivery method</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div id="dhl-card" class="card mb-4">
+                                    <div class="card-body">
+                                        <input id="dhl-payment" class="form-check-input me-1" type="radio" name="delivery-method" value="dhl" checked>
+                                        <label class="form-label fw-semibold" for="dhl-payment">DHL</label>
+                                        <p class="form-label text-body-tertiary m-0">Secure and swift payments for seamless shipping.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div id="dtdc-card" class="card mb-4">
+                                    <div class="card-body">
+                                        <input id="dtdc-payment" class="form-check-input me-1" type="radio" name="delivery-method" value="dtdc">
+                                        <label class="form-label fw-semibold" for="dtdc-payment">DTDC</label>
+                                        <p class="form-label text-body-tertiary m-0">Easy payment and convenient courier services.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-method mb-4">
+                        <h5 class="fw-normal mb-3">Payment method</h5>
+                        <hr>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <input class="form-check-input me-1" type="radio" name="payment-method" value="card" id="cardRadio" checked>
+                                <label class="form-check-label stretched-link" for="cardRadio">Card payment</label>
+                                <p class="form-text ms-4 m-0">VISA, Mastercard and American Express</p>
+                            </li>
+                            <li class="list-group-item">
+                                <input class="form-check-input me-1" type="radio" name="payment-method" value="paypal" id="paypalRadio">
+                                <label class="form-check-label stretched-link" for="paypalRadio">PayPal</label>
+                                <p class="form-text ms-4 m-0">Pay using PayPal</p>
+                            </li>
+                            <li class="list-group-item">
+                                <input class="form-check-input me-1" type="radio" name="payment-method" value="pod" id="podRadio">
+                                <label class="form-check-label stretched-link" for="podRadio">Pay on Delivery</label>
+                                <p class="form-text ms-4 m-0">Cash, UPI and Cards accepted.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+                <hr>
+                <div class="d-flex align-items-center justify-content-between">
+                    <a href="/cart" class="btn btn-primary" role="button"><i class="bi bi-arrow-left me-2"></i>Back to cart</a>
+                    <a href="/checkout/review" class="btn btn-primary btn-review-order disabled" role="button">Review order<i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="mb-5 card shadow">
+                <div class="card-header">
+                    <h6 class="my-2">Order Summary</h6>
+                </div>
+                <div class="py-4 card-body">
+                    <p class="text-muted text-sm">Shipping and additional costs are calculated based on values you have entered.
+                    </p>
+                    <table class="table card-text">
+                        <tbody>
+                            <tr>
+                                <th class="py-4">Order Subtotal </th>
+                                <td class="py-4 text-end text-muted">₹<label class="cart-subtotal">{{cart_total}}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="py-4">Shipping and handling</th>
+                                <td class="py-4 text-end text-muted">₹<label class="cart-shipping-cost">10.00</label></td>
+                            </tr>
+                            <tr>
+                                <th class="py-4">Tax</th>
+                                <td class="py-4 text-end text-muted">₹0.00</td>
+                            </tr>
+                            <tr>
+                                <th class="pt-4 border-0">Total</th>
+                                <td class="pt-4 border-0 text-end h3 fw-normal text-nowrap">₹<label class="cart-total">{{cart_total + 10}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
