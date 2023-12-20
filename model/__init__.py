@@ -1,61 +1,98 @@
 from menu_manage import *
 #from ord_priority import *
 from order_manage import *
+import pickle
 
 
 if __name__ == "__main__":
+
+
+    try:
+        with open('all_menus.pkl', 'rb') as file:
+            menus = pickle.load(file)
+    except FileNotFoundError:
+        print("Menu file not found.")
+        menus = {}
+    except Exception as e:
+        print(f"Error loading menus: {e}")
+    
+    breakfast_menu = menus["Breakfast"]
+    lunch_menu = menus["Lunch"]
+    snacks_menu = menus["Snacks"]
+    drinks_menu = menus["Drinks"]
+    dessert_menu = menus["Dessert"]
+    
+
+
     # Adding items to Breakfast menu
     menu_manager = MenuManager()
-    breakfast_menu = menu_manager.get_menu("Breakfast")
-    breakfast_menu.add_item("Pancakes", 7.99, "Fluffy pancakes")
-    breakfast_menu.add_item("Omelette", 6.49, "Cheese and veggie omelette")
-    breakfast_menu.add_item("French Toast", 8.99, "Buttery French toast")
-    breakfast_menu.add_item("Waffles", 9.99, "Crispy waffles")
-    breakfast_menu.add_item("Fruit Bowl", 4.99, "Assorted fresh fruits")
+    # breakfast_menu = menu_manager.get_menu("Breakfast")
+    # breakfast_menu.add_item("Pancakes", 7.99, "Fluffy pancakes")
+    # breakfast_menu.add_item("Omelette", 6.49, "Cheese and veggie omelette")
+    # breakfast_menu.add_item("French Toast", 8.99, "Buttery French toast")
+    # breakfast_menu.add_item("Waffles", 9.99, "Crispy waffles")
+    # breakfast_menu.add_item("Fruit Bowl", 4.99, "Assorted fresh fruits")
 
-    # Adding items to Lunch menu
-    lunch_menu = menu_manager.get_menu("Lunch")
-    lunch_menu.add_item("Salad", 6.99, "Caesar salad")
-    lunch_menu.add_item("Sandwich", 7.49, "Club sandwich")
-    lunch_menu.add_item("Pasta", 10.99, "Spaghetti carbonara")
-    lunch_menu.add_item("Soup", 5.99, "Tomato basil soup")
-    lunch_menu.add_item("Pizza", 12.99, "Margherita pizza")
+    # # Adding items to Lunch menu
+    # lunch_menu = menu_manager.get_menu("Lunch")
+    # lunch_menu.add_item("Salad", 6.99, "Caesar salad")
+    # lunch_menu.add_item("Sandwich", 7.49, "Club sandwich")
+    # lunch_menu.add_item("Pasta", 10.99, "Spaghetti carbonara")
+    # lunch_menu.add_item("Soup", 5.99, "Tomato basil soup")
+    # lunch_menu.add_item("Pizza", 12.99, "Margherita pizza")
 
-    # Adding items to Snacks menu
-    snacks_menu = menu_manager.get_menu("Snacks")
-    snacks_menu.add_item("Nachos", 8.99, "Loaded nachos")
-    snacks_menu.add_item("Popcorn", 3.49, "Buttered popcorn")
-    snacks_menu.add_item("Mozzarella Sticks", 7.99, "Crispy mozzarella sticks")
-    snacks_menu.add_item("Chicken Wings", 9.99, "Spicy chicken wings")
-    snacks_menu.add_item("Hummus and Pita", 6.49, "Creamy hummus with pita bread")
+    # # Adding items to Snacks menu
+    # snacks_menu = menu_manager.get_menu("Snacks")
+    # snacks_menu.add_item("Nachos", 8.99, "Loaded nachos")
+    # snacks_menu.add_item("Popcorn", 3.49, "Buttered popcorn")
+    # snacks_menu.add_item("Mozzarella Sticks", 7.99, "Crispy mozzarella sticks")
+    # snacks_menu.add_item("Chicken Wings", 9.99, "Spicy chicken wings")
+    # snacks_menu.add_item("Hummus and Pita", 6.49, "Creamy hummus with pita bread")
 
-        # Adding items to Drinks menu
-    drinks_menu = menu_manager.get_menu("Drinks")
-    drinks_menu.add_item("Coffee", 3.49, "Hot brewed coffee")
-    drinks_menu.add_item("Tea", 2.99, "Assam black tea")
-    drinks_menu.add_item("Milkshake", 4.99, "Chocolate milkshake")
-    drinks_menu.add_item("Smoothie", 5.49, "Mixed berry smoothie")
-    drinks_menu.add_item("Soda", 2.29, "Assorted soft drinks")
+    #     # Adding items to Drinks menu
+    # drinks_menu = menu_manager.get_menu("Drinks")
+    # drinks_menu.add_item("Coffee", 3.49, "Hot brewed coffee")
+    # drinks_menu.add_item("Tea", 2.99, "Assam black tea")
+    # drinks_menu.add_item("Milkshake", 4.99, "Chocolate milkshake")
+    # drinks_menu.add_item("Smoothie", 5.49, "Mixed berry smoothie")
+    # drinks_menu.add_item("Soda", 2.29, "Assorted soft drinks")
 
 
 
-    # Adding items to Dessert menu
-    dessert_menu = menu_manager.get_menu("Dessert")
-    dessert_menu.add_item("Cake", 7.99, "Chocolate cake")
-    dessert_menu.add_item("Ice Cream", 4.49, "Vanilla ice cream")
-    dessert_menu.add_item("Cheesecake", 8.99, "New York-style cheesecake")
-    dessert_menu.add_item("Fruit Tart", 6.49, "Fresh fruit tart")
-    dessert_menu.add_item("Brownie", 5.99, "Fudgy chocolate brownie")
 
+
+
+    # # Adding items to Dessert menu
+    # dessert_menu = menu_manager.get_menu("Dessert")
+    # dessert_menu.add_item("Cake", 7.99, "Chocolate cake")
+    # dessert_menu.add_item("Ice Cream", 4.49, "Vanilla ice cream")
+    # dessert_menu.add_item("Cheesecake", 8.99, "New York-style cheesecake")
+    # dessert_menu.add_item("Fruit Tart", 6.49, "Fresh fruit tart")
+    # dessert_menu.add_item("Brownie", 5.99, "Fudgy chocolate brownie")
+
+    # menus = {
+    #     "Breakfast": menu_manager.get_menu("Breakfast"),
+    #     "Lunch": menu_manager.get_menu("Lunch"),
+    #     "Snacks": menu_manager.get_menu("Snacks"),
+    #     "Drinks": menu_manager.get_menu("Drinks"),
+    #     "Dinner": menu_manager.get_menu("Dinner"),
+    #     "Dessert": menu_manager.get_menu("Dessert")
+    # }
    
+    try:
+        with open('all_menus.pkl', 'wb') as file:
+            pickle.dump(menus, file)
+    except Exception as e:
+        print(f"Error saving menus: {e}")
 
+    
     selected_menu = input("Enter menu type to order (Breakfast / Lunch / Snacks / Drinks / Dinner / Dessert): ")
 
     if selected_menu.lower() in ["breakfast", "lunch", "snacks", "drinks", "dinner", "dessert"]:
         # Get the selected menu
-        menu = menu_manager.get_menu(selected_menu.capitalize())
+        menu = menus[selected_menu.capitalize()]
         print(f"Items in {selected_menu.capitalize()} Menu:")
-        selected_items = menu_manager.get_menu(selected_menu.capitalize()).get_menu_items()
+        selected_items = menu.get_menu_items()
         print('-'*60)
         print('Name', ' '*(16), 'Price  ', 'Description', ' '*(25-len('description')), 'Availability')
 
