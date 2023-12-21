@@ -127,3 +127,20 @@ $('.remove-from-cart').on('click', function(e) {
     ]);
     d.show();
 })
+
+// Update order summary details
+function updateOrderSummary() {
+    var prices = $('.total-item-price').map(function() {
+        return parseFloat($(this).text());
+    }).get();
+
+    let sum = 0;
+
+    for (let i = 0; i < prices.length; i++) {
+        sum += prices[i];
+    }
+
+    shipping_cost = parseInt($('.cart-shipping-cost').text());
+    $('.cart-subtotal').text(sum);
+    $('.cart-total').text(sum + shipping_cost);
+}
