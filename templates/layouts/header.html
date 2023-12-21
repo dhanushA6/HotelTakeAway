@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md">
-    <div class="container bg-body-tertiary p-3 rounded-4">
+    <div class="container bg-body-tertiary p-3 rounded-4 shadow">
         <a class="navbar-brand fs-4" href="/"><img src="{{url_for('static', filename='eazycart-logo.svg')}}" alt="kfc logo" class="img-fluid me-2" width="30" height="26">HFC</a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,7 +8,7 @@
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="navbar-nav fs-5 mb-md-0 ms-auto">
                 {% for item in ['Cart', 'Orders'] %}
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <a class="nav-link{% if page_name == item %} active{% endif %}" href="/{{ item|lower }}"><i
                 class="bi {% if item == 'Cart' %}bi-cart-plus{% elif item == 'Orders' %}bi-bag{% endif %} me-1"></i>{{ item }}</a>
                 </li>
