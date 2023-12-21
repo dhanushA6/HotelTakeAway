@@ -14,7 +14,9 @@ def category(name):
 
 @app.route('/cart')
 def cart():
-    return render_template('cart.html', page_name="Cart")
+    cart_items = wp.cart_items()
+    cart_total = wp.get_cart_total()
+    return render_template('cart.html', page_name="Cart", cartItems=cart_items, cart_total=cart_total)
 
 @app.route('/orders')
 def orders():
