@@ -14,6 +14,6 @@ class Cart(metaclass=SingletonMeta):
         self.orders[item] = qty
 
     def get_cart_items(self):
-        return self.orders
+        return self.orders       
 
 
