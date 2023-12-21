@@ -51,7 +51,7 @@ def create_order( cart_items):
     
 
 
-def additem_to_cart(item, qty):
+def additem_to_cart(item_add, qty):
     try:
         # Try to load the existing cart object
         with open('cart.pkl', 'rb') as file:
@@ -59,14 +59,29 @@ def additem_to_cart(item, qty):
     except FileNotFoundError:
         # If file doesn't exist, create a new cart object
         cart = Cart()
+        
+    cart_dict = cart.get_cart_items() 
+    flag = False 
+    for item, q in cart_dict.items():
+        # Add  duplicate item to the cart
+        if item_add.name == item.name:
+                flag = True
+                cart_dict[item] = qty
+                print("Item qty updated")
+                print(cart.get_cart_items())
 
-    # Add item to the cart
-    cart.add_to_cart(item, qty)
-    
-    # Save the updated cart object to the file using pickle
+                break
+    # Add new item to the cart
+    if not flag:
+        print("New Item Added")
+        cart_dict[item_add] = qty
+        
     with open('cart.pkl', 'wb') as file:
-        pickle.dump(cart, file)
-        print('Item Added to cart Successfully')
+                    pickle.dump(cart, file)
+                    print('Cart item added  and Saved Successfully')
+
+    
+
 
 
 def make_cart_empty():
