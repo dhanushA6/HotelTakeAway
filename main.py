@@ -41,7 +41,7 @@ if __name__ == "__main__":
                     if item.name.lower() == item_name.lower():
                         item_exists = True
                         qty = int(input(f"Enter quantity for {item.name}: "))
-                        wp.additem_to_cart(item, qty)
+                        wp.add_item_to_cart(item, int(qty))
                         break
 
                 if not item_exists:

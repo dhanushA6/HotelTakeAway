@@ -144,3 +144,75 @@ function updateOrderSummary() {
     $('.cart-subtotal').text(sum);
     $('.cart-total').text(sum + shipping_cost);
 }
+
+// Update cart quantity
+$('.btn-update-cart').on('click', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var data = [];
+
+
+    $('.cart-item').each(function() {
+        pname = $(this).data('pname');
+        pdesc = $(this).data('desc');
+        price = $(this).data('price');
+        pimg = $(this).data('pimg');
+        pcat = $(this).data('pcat');
+        quantity = $(this).find('.product-quantity').text();
+        data.push({
+            "p_name": pname,
+            "p_price": parseInt(price),
+            "p_desc": pdesc,
+            "p_img": pimg,
+            "p_cat": pcat,
+            "qty": parseInt(quantity)
+        });
+    });
+
+    var oldHtml = $this.html();
+    var spinner = `<div class="spinner-border spinner-border-sm text-body me-2" role="status"></div>`
+    $this.html(spinner + 'Updating...');
+    $this.attr('disabled', true);
+    $.ajax({
+        url: "/api/cart/update",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function() {
+            location.reload();
+        },
+        error: function() {
+            $this.html(oldHtml);
+            $this.removeAttr('disabled')
+        }
+    });
+})
+
+// Increase count of items
+$('.items-increase').click(function(e) {
+    c_qty = parseInt($(this).prev().html());
+    max = parseInt($(this).prev().attr('data-max'))
+    total_price_el = $(this).parents('.quantity-section').next().find('.total-item-price');
+    original_price = parseInt($(this).parents('.quantity-section').prev().find('.price-per-item').html())
+    if (max > c_qty) {
+        c_qty += 1;
+        new_price = original_price + parseInt(total_price_el.html())
+        total_price_el.html(new_price)
+    }
+    $(this).prev().html(c_qty);
+    updateOrderSummary()
+});
+
+// Decrease count of items
+$('.items-decrease').click(function(e) {
+    c_qty = parseInt($(this).next().html());
+    total_price_el = $(this).parents('.quantity-section').next().find('.total-item-price');
+    original_price = parseInt($(this).parents('.quantity-section').prev().find('.price-per-item').html())
+    if (c_qty > 1) {
+        c_qty -= 1;
+        new_price = parseInt(total_price_el.html()) - original_price
+        total_price_el.html(new_price)
+    }
+    $(this).next().html(c_qty);
+    updateOrderSummary()
+});

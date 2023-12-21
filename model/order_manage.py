@@ -18,7 +18,7 @@ class Order(ABC):
         self.token = token
 
     def calculate_bill(self):
-        total_bill = sum(item.price*qty for item , qty in self.items.items())
+        total_bill = sum(int(item.price)*int(qty) for item , qty in self.items.items())
         return total_bill
 
     def set_payment_strategy(self, payment_strategy):

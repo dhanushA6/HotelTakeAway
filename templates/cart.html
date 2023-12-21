@@ -13,7 +13,7 @@
                     {% if cartItems|length > 0 %}
                     <label class="form-text">Update cart after making changes!</label>
                     <hr> {% endif %} {% for item, qty in cartItems.items(): %}
-                    <div class="cart-item my-3" data-product-name="{{item.name}}">
+                    <div class="cart-item my-3" data-pname="{{item.name}}" data-price="{{item.price}}" data-desc="{{item.description}}" data-pimg="{{item.img}}" data-pcat="{{item.category}}">
                         <div class="d-flex align-items-center text-start text-md-center row">
                             <div class="col-md-5 col-12 product-info-section">
                                 <a class="cart-remove close mt-3 d-md-none" href="#"></a>
@@ -48,7 +48,7 @@
                                         <div class="row">
                                             <div class="d-md-none text-muted col-6">Total price</div>
                                             <div class="text-end text-md-center col-md-12 col-6">₹
-                                                <label class="total-item-price">{{item.price * qty}}</label>
+                                                <label class="total-item-price">{{item.price|int * qty}}</label>
                                             </div>
                                         </div>
                                     </div>

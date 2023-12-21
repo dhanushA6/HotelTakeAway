@@ -54,5 +54,20 @@ def remove_from_cart():
         result = wp.remove_cart_item(item)
         return jsonify({'result': result})
 
+@app.route("/api/cart/update", methods=["POST"])
+def update_cart():
+    if request.method == "POST":
+        data = request.get_json()
+        for item in data:
+            new = wp.create_item(
+                item['p_name'],
+                item['p_price'],
+                item['p_desc'],
+                item['p_img'],
+                item['p_cat']
+            )
+            result = wp.add_item_to_cart(new, item['qty'])
+        return jsonify({"message": result})
+
 if __name__ == '__main__':
     app.run(debug=True)
