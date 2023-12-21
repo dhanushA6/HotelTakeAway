@@ -8,11 +8,14 @@ def generate_unique_token():
     return random.randint(100, 999) 
 
 class Order(ABC):
-    def __init__(self, items):
+    def __init__(self, items, customer):
+        self.customer = customer
         self.items = items
         self.token = None
         self.is_paid = False
         self.payment_strategy = None
+        self.order_date = None
+        self.order_time = None
 
     def assign_token(self, token):
         self.token = token
@@ -36,9 +39,9 @@ class Order(ABC):
         pass
 
 class NormalOrder(Order):
-    def __init__(self, items):
+    def __init__(self, items, customer):
         self.type = 'normal'
-        super().__init__(items)
+        super().__init__(items,customer)
 
     def display_order(self):
         
@@ -46,9 +49,9 @@ class NormalOrder(Order):
             print(f'{item.name}', ' '*abs(20 - len(item.name)), f'{item.price}',' '*(5-len(str(item.price))), f'{qty}')
         print("Normal Order:")
 class PriorityOrder(Order):
-    def __init__(self, items):
+    def __init__(self, items, customer):
         self.type = 'priority'
-        super().__init__(items)
+        super().__init__(items,customer)
 
     def display_order(self):
         
@@ -59,9 +62,9 @@ class PriorityOrder(Order):
 # Factory Method for creating orders
 class OrderFactory:
     @staticmethod
-    def create_order(items):
+    def create_order(items, customer):
         if len(items) <= 3:
-            return PriorityOrder(items)
+            return PriorityOrder(items, customer)
         else:
-            return NormalOrder(items)
+            return NormalOrder(items, customer)
 
