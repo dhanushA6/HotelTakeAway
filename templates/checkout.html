@@ -9,56 +9,25 @@
     <div class="row">
         <div class="col-lg-8 mb-3">
             <div class="card shadow px-3 py-4">
-                <form id="checkout-form" class="row">
+                <form id="checkout-form" class="row" method="post">
                     <div class="customer-details mb-3">
-                        <h5 class="fw-normal">Invoice Address</h5>
+                        <h5 class="fw-normal">User details</h5>
                         <hr>
                         <div class="row">
                             <div class="col-12 mb-3">
-                                <label for="invoice-street" class="form-label">Street</label>
-                                <input type="text" class="form-control" id="invoice-street">
+                                <label for="user-fullname" class="form-label">Full Name</label>
+                                <input type="text" name="user-fullname" class="form-control" id="user-fullname">
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="invoice-city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="invoice-city">
+                            <div class="col-md-6 mb-3">
+                                <label for="user-email" class="form-label">Email</label>
+                                <input type="email" name="user-email" class="form-control" id="user-email">
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="invoice-country" class="form-label">Country</label>
-                                <input type="text" class="form-control" id="invoice-country">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="zip-code" class="form-label">Zip code</label>
-                                <input type="number" class="form-control" id="zip-code">
+                            <div class="col-md-6 mb-3">
+                                <label for="user-phoneno" class="form-label">Phone Number</label>
+                                <input type="number" name="user-phoneno" class="form-control" id="user-phoneno">
                             </div>
                         </div>
                     </div>
-                    <div class="delivery-method mb-3">
-                        <h5 class="fw-normal mt-2 mb-3">Delivery method</h5>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-12 col-lg-6">
-                                <div id="dhl-card" class="card mb-4">
-                                    <div class="card-body">
-                                        <input id="dhl-payment" class="form-check-input me-1" type="radio" name="delivery-method" value="dhl" checked>
-                                        <label class="form-label fw-semibold" for="dhl-payment">DHL</label>
-                                        <p class="form-label text-body-tertiary m-0">Secure and swift payments for seamless shipping.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-6">
-                                <div id="dtdc-card" class="card mb-4">
-                                    <div class="card-body">
-                                        <input id="dtdc-payment" class="form-check-input me-1" type="radio" name="delivery-method" value="dtdc">
-                                        <label class="form-label fw-semibold" for="dtdc-payment">DTDC</label>
-                                        <p class="form-label text-body-tertiary m-0">Easy payment and convenient courier services.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="payment-method mb-4">
                         <h5 class="fw-normal mb-3">Payment method</h5>
                         <hr>
@@ -74,18 +43,18 @@
                                 <p class="form-text ms-4 m-0">Pay using PayPal</p>
                             </li>
                             <li class="list-group-item">
-                                <input class="form-check-input me-1" type="radio" name="payment-method" value="pod" id="podRadio">
-                                <label class="form-check-label stretched-link" for="podRadio">Pay on Delivery</label>
-                                <p class="form-text ms-4 m-0">Cash, UPI and Cards accepted.</p>
+                                <input class="form-check-input me-1" type="radio" name="payment-method" value="gpay" id="gpayRadio">
+                                <label class="form-check-label stretched-link" for="gpayRadio">Google Pay</label>
+                                <p class="form-text ms-4 m-0">Pay using Gpay wallet</p>
                             </li>
                         </ul>
                     </div>
+                    <hr>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a href="/cart" class="btn btn-primary" role="button"><i class="bi bi-arrow-left me-2"></i>Back to cart</a>
+                        <button href="/checkout/review" class="btn btn-primary btn-review-order disabled" type="submit">Place order<i class="bi bi-arrow-right ms-2"></i></button>
+                    </div>
                 </form>
-                <hr>
-                <div class="d-flex align-items-center justify-content-between">
-                    <a href="/cart" class="btn btn-primary" role="button"><i class="bi bi-arrow-left me-2"></i>Back to cart</a>
-                    <a href="/checkout/review" class="btn btn-primary btn-review-order disabled" role="button">Review order<i class="bi bi-arrow-right ms-2"></i></a>
-                </div>
             </div>
         </div>
         <div class="col-lg-4">

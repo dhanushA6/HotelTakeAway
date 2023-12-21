@@ -216,3 +216,30 @@ $('.items-decrease').click(function(e) {
     $(this).next().html(c_qty);
     updateOrderSummary()
 });
+
+if (window.location.pathname == '/checkout') {
+    $(document).ready(function() {
+        // Function to check if all form fields are filled
+        function checkForm() {
+            var formFilled = true;
+
+            // Check each input field in the form
+            $('#checkout-form input').each(function() {
+                if ($(this).val() === '') {
+                    formFilled = false;
+                    return false; // Exit the loop if any field is empty
+                }
+            });
+
+            // Enable or disable the submit button based on the formFilled variable
+            if (formFilled) {
+                $('.btn-review-order').removeClass('disabled');
+            } else {
+                $('.btn-review-order').addClass('disabled');
+            }
+        }
+
+        // Call the checkForm function whenever a form field changes
+        $('#checkout-form input').on('input', checkForm);
+    });
+}

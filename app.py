@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import wrapper as wp
 
 app = Flask(__name__)
+
+app.secret_key = "hfc"
 
 @app.route('/')
 def index():
@@ -21,6 +23,18 @@ def cart():
     cart_items = wp.cart_items()
     cart_total = wp.get_cart_total()
     return render_template('cart.html', page_name="Cart", cartItems=cart_items, cart_total=cart_total)
+
+@app.route("/checkout", methods=["GET", "POST"])
+def checkout():
+    if request.method == "GET":
+        total = wp.get_cart_total()
+        return render_template("checkout.html", page_name="Checkout", cart_total=total)
+    else:
+        session['u_payment'] = request.form['payment-method']
+        session['u_phone'] = request.form['user-phoneno']
+        session['u_fullname'] = request.form['user-fullname']
+        session['u_email'] = request.form['user-email']
+        return redirect(url_for('orders'))
 
 @app.route('/orders')
 def orders():
