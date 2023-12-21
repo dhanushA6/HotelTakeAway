@@ -25,24 +25,48 @@ if __name__ == "__main__":
   
         # Ask for item and quantity
         #order_items = {}
-        while True:
-            print("[1.] Choose Item.")
-            print("[2.] Done/Finish")
-            item_name = input(f"Enter item name from {selected_menu.capitalize()} menu (or 'done' to finish): ")
-            if item_name.lower() == 'done':
-                break
-
-            # Check if the item exists in the menu
-            item_exists = False
-            for item in menu.get_menu_items():
-                if item.name.lower() == item_name.lower():
-                    item_exists = True
-                    qty = int(input(f"Enter quantity for {item.name}: "))
-                    wp.additem_to_cart(item, qty)
+        print("[1.] one to add to cart ")
+        print("[2.] To reomove front the cart ")
+        ch = int(input("Enter your choice : "))
+        if ch == 1:
+            while True:
+            
+                item_name = input(f"Enter item name from {selected_menu.capitalize()} menu (or 'done' to finish): ")
+                if item_name.lower() == 'done':
                     break
 
-            if not item_exists:
-                print("Item not found in the menu. Please enter a valid item.")
+                # Check if the item exists in the menu
+                item_exists = False
+                for item in menu.get_menu_items():
+                    if item.name.lower() == item_name.lower():
+                        item_exists = True
+                        qty = int(input(f"Enter quantity for {item.name}: "))
+                        wp.additem_to_cart(item, qty)
+                        break
+
+                if not item_exists:
+                    print("Item not found in the menu. Please enter a valid item.")
+        elif ch == 2:
+            while True:
+            
+                item_name = input(f"Enter item name to remove front cart ")
+                if item_name.lower() == 'done':
+                    break
+
+                # Check if the item exists in the menu
+                item_exists = False
+                for item in menu.get_menu_items():
+                    if item.name.lower() == item_name.lower():
+                        item_exists = True
+                        #qty = int(input(f"Enter quantity for {item.name}: "))
+                        print("I am here ")
+                        wp.remove_cart_item(item)
+                        break
+
+                if not item_exists:
+                    print("Item not found in the menu. Please enter a valid item.")
+
+
         
         # Create orders using the OrderFactory
         if wp.cart_items():
