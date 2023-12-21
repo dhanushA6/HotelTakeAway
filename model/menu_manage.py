@@ -9,7 +9,7 @@ class Menu(ABC):
         pass
 
     @abstractmethod
-    def add_item(self, name, price, description, available):
+    def add_item(self, name, price, description,img, category, available = True):
         pass
 
     @abstractmethod
@@ -27,8 +27,8 @@ class BreakfastMenu(Menu):
     def get_menu_items(self):
        return [item for item in self.items] 
 
-    def add_item(self, name, price, description, available = True):
-        new_item = MenuItem(name, price, description, available)
+    def add_item(self, name, price, description,img, category, available = True):
+        new_item = MenuItem(name, price, description, img, category, available)
         self.items.append(new_item)
 
     def delete_item(self, item_name):
@@ -53,8 +53,8 @@ class LunchMenu(Menu):
     def get_menu_items(self):
         return [item for item in self.items]
 
-    def add_item(self, name, price, description, available = True):
-        new_item = MenuItem(name, price, description, available)
+    def add_item(self, name, price, description,img, category, available = True):
+        new_item = MenuItem(name, price, description, img, category, available)
         self.items.append(new_item)
 
     def delete_item(self, item_name):
@@ -81,8 +81,8 @@ class SnacksMenu(Menu):
     def get_menu_items(self):
         return [item for item in self.items]
 
-    def add_item(self, name, price, description, available = True):
-        new_item = MenuItem(name, price, description, available)
+    def add_item(self, name, price, description,img, category, available = True):
+        new_item = MenuItem(name, price, description, img, category, available)
         self.items.append(new_item)
 
     def delete_item(self, item_name):
@@ -107,8 +107,8 @@ class DrinksMenu(Menu):
     def get_menu_items(self):
         return [item for item in self.items]
 
-    def add_item(self, name, price, description, available = True):
-        new_item = MenuItem(name, price, description, available)
+    def add_item(self, name, price, description,img, category, available = True):
+        new_item = MenuItem(name, price, description, img, category, available)
         self.items.append(new_item)
 
     def delete_item(self, item_name):
@@ -133,8 +133,8 @@ class DinnerMenu(Menu):
     def get_menu_items(self):
         return [item for item in self.items]
 
-    def add_item(self, name, price, description, available = True):
-        new_item = MenuItem(name, price, description, available)
+    def add_item(self, name, price, description,img, category, available = True):
+        new_item = MenuItem(name, price, description, img, category, available)
         self.items.append(new_item)
 
     def delete_item(self, item_name):
@@ -159,8 +159,8 @@ class DessertMenu(Menu):
     def get_menu_items(self):
         return [item for item in self.items]
 
-    def add_item(self, name, price, description, available = True):
-        new_item = MenuItem(name, price, description, available)
+    def add_item(self, name, price, description,img, category, available = True):
+        new_item = MenuItem(name, price, description, img, category, available)
         self.items.append(new_item)
 
     def delete_item(self, item_name):

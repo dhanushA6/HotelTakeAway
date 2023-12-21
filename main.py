@@ -9,7 +9,7 @@ if __name__ == "__main__":
         f.close()
     
     menu_manager = MenuManager()
-    print(wp.cart_items())
+    
     selected_menu = input("Enter menu type to order (Breakfast / Lunch ): ")
     
     if selected_menu.lower() in ["breakfast", "lunch", "snacks", "drinks", "dinner", "dessert"]:

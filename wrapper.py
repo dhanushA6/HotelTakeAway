@@ -83,8 +83,27 @@ def make_cart_empty():
     with open('cart.pkl', 'wb') as file:
         pickle.dump(cart, file)
         print('Item Added to cart Successfully')
-        
+
     print("Cart got Empty")
+
+def remove_cart_item(item_to_delete):
+    try:
+        # Try to load the existing cart object
+        with open('cart.pkl', 'rb') as file:
+            cart = pickle.load(file)
+    except FileNotFoundError:
+        # If file doesn't exist, create a new cart object
+        cart = Cart()
+    if item_to_delete in cart.get_cart_items():
+        # Delete item from the cart
+        cart_dict = cart.get_cart_items()
+        del cart_dict[item_to_delete] 
+        with open('cart.pkl', 'wb') as file:
+            pickle.dump(cart, file)
+            print('Cart item removed and Saved Successfully')
+    else:
+        print('Cart is Empty ')
+
 
 
 def cart_items():
