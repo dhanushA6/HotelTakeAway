@@ -12,15 +12,15 @@
                 <div class="cart-body">
                     {% if cartItems|length > 0 %}
                     <label class="form-text">Update cart after making changes!</label>
-                    <hr> {% endif %} {% for item in cartItems: %}
-                    <div class="cart-item my-3" data-product-id="{{item[0]}}">
+                    <hr> {% endif %} {% for item, qty in cartItems.items(): %}
+                    <div class="cart-item my-3" data-product-name="{{item.name}}">
                         <div class="d-flex align-items-center text-start text-md-center row">
                             <div class="col-md-5 col-12 product-info-section">
                                 <a class="cart-remove close mt-3 d-md-none" href="#"></a>
                                 <div class="d-flex align-items-center">
-                                    <a href="/products/{{item[0]}}"><img alt="{{item[6]}}" src="{{ url_for('static', filename='products/' + item[6]) }}" width="80"> </a>
+                                    <a href="/products/{{item.img}}"><img alt="{{item.img}}" src="{{ url_for('static', filename='products/' + item.category + '/' + item.img) }}" width="80"> </a>
                                     <div class="cart-title text-start ms-3">
-                                        <a class="text-body text-decoration-none" href="/products/{{item[0]}}"><strong class="product-name">{{item[1]}}</strong>
+                                        <a class="text-body text-decoration-none" href="/category/{{item.category|lower}}"><strong class="product-name">{{item.name}}</strong>
                                         </a>
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@
                                     <div class="col-md-3 price-per-item-section">
                                         <div class="row">
                                             <div class="d-md-none text-muted col-6">Price per item</div>
-                                            <div class="text-end text-md-center col-md-12 col-6">₹ <label class="price-per-item">{{item[2]}}</label></div>
+                                            <div class="text-end text-md-center col-md-12 col-6">₹ <label class="price-per-item">{{item.price}}</label></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4 quantity-section">
@@ -38,8 +38,8 @@
                                             <div class="text-muted d-md-none col-sm-9 col-7">Quantity</div>
                                             <div class="col-md-12 col-sm-3 col-5">
                                                 <div class="d-flex align-items-center">
-                                                    <button type="button" class="items-decrease btn btn-items">-</button> {% for i in inCart: %} {% if i[2] == item[0] %}
-                                                    <label class="text-center border-0 border-md product-quantity form-control" data-max="{{item[3]}}">{{i[3]}}</label> {% endif %} {% endfor %}
+                                                    <button type="button" class="items-decrease btn btn-items">-</button>
+                                                    <label class="text-center border-0 border-md product-quantity form-control" data-max="{{item.price}}">{{qty}}</label>
                                                     <button type="button" class="items-increase btn btn-items">+</button></div>
                                             </div>
                                         </div>
@@ -47,14 +47,13 @@
                                     <div class="col-md-3 total-price-section">
                                         <div class="row">
                                             <div class="d-md-none text-muted col-6">Total price</div>
-                                            <div class="text-end text-md-center col-md-12 col-6">
-                                                {% for i in inCart: %} {% if i[2] == item[0] %} ₹
-                                                <label class="total-item-price">{{item[2]*i[3]}}</label> {% endif %} {% endfor %}
+                                            <div class="text-end text-md-center col-md-12 col-6">₹
+                                                <label class="total-item-price">{{item.price}}</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="d-none d-md-block text-center col-2">
-                                        <a role="button" class="remove-from-cart text-muted btn" data-id="{{item[0]}}"><i class="bi bi-x"></i>
+                                        <a role="button" class="remove-from-cart text-muted btn" data-name="{{item.name}}"><i class="bi bi-x"></i>
                                         </a>
                                     </div>
                                 </div>
