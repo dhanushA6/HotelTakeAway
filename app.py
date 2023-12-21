@@ -11,7 +11,8 @@ def index():
 def category(name):
     if request.method == 'GET':
         items = wp.get_menu_items(name)
-        return render_template('category.html', page_name="Category", name=name.capitalize(), items=items)
+        names = wp.get_cart_item_names()
+        return render_template('category.html', page_name="Category", name=name.capitalize(), items=items, names=names)
     else:
         return redirect(url_for('index'))
         
