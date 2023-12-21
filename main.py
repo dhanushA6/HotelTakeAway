@@ -1,12 +1,26 @@
 from model.menu_manage import *
 from model.order_manage import *
+from model.customer import Customer
 import pickle
 import wrapper as wp
+from datetime import datetime
 
 if __name__ == "__main__":
     with open('menu.pickle', 'rb') as f:
         menus = pickle.load(f)
         f.close()
+    
+    try:
+        # Try to load the existing cart object
+        with open('order.pkl', 'rb') as file:
+            order_list = pickle.load(file)
+        for order in order_list:
+            print(order.order_time)
+            print(order.order_date)
+    except FileNotFoundError:
+        # If file doesn't exist, create a new cart object
+        print("No Order is Created")
+    
     
     menu_manager = MenuManager()
     
@@ -70,7 +84,21 @@ if __name__ == "__main__":
         
         # Create orders using the OrderFactory
         if wp.cart_items():
-            new_order = OrderFactory.create_order(wp.cart_items())
+            
+            print("Enter the Customer Details:  ")
+            name = input("Enter the name: ").capitalize()
+            ph_no = int(input("Enter your ph_no Number: "))
+            email = input("Enter your email: ")
+            cust = Customer(name, ph_no, email)
+            new_order = OrderFactory.create_order(wp.cart_items(),cust)
+            current_datetime = datetime.now()
+            # Extract date and time separately
+            current_date = current_datetime.date()
+            current_time = current_datetime.time()
+
+            new_order.order_date = current_date
+            new_order.order_time = current_time.strftime("%H:%M:%S")
+
             print("Order created successfully with the following items:")
             new_order.assign_token(generate_unique_token())
             print('-'*60)
@@ -83,6 +111,8 @@ if __name__ == "__main__":
             # Assigning a token to the order
             print('Total Bill Amount: ',new_order. calculate_bill())
             print('-'*60)
+
+
  
             # Choosing a payment strategy
             payment_option = input("Enter payment option (Credit Card / Cash): ")
@@ -96,6 +126,8 @@ if __name__ == "__main__":
 
             # Making payment
             new_order.make_payment()
+
+            wp.push_orders(new_order)
 
             # Displaying order details
             print(f"Order Token: {new_order.token}")

@@ -1,6 +1,7 @@
 from model.menu_manage import MenuManager
 from model.order_manage import *
 from model.cart import SingletonMeta, Cart
+from model.orders import Orders
 import pickle, os
 
 # Path Constants
@@ -158,3 +159,13 @@ def load_cart():
         # If file doesn't exist, create a new cart object
         cart = Cart()
     return cart
+
+def push_orders(order):
+    orders= Orders()
+    orders.add_order(order)
+    orders_list = orders.orders_data
+    with open('order.pkl', 'wb') as file:
+        pickle.dump(orders_list, file)
+        print('Item Added to cart Successfully')
+
+
