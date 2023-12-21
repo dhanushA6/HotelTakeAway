@@ -24,13 +24,15 @@ if __name__ == "__main__":
     breakfast_menu.add_item("Vadai", 10, "Deep-fried lentil fritters, typically made with urad dal or chana dal, enjoyed as a savory snack.", "medhu-vadai.jpg")
     breakfast_menu.add_item("Pongal", 40, "South Indian rice dish cooked with lentils, black pepper, cumin, and ghee, often garnished with cashews.", "rava-pongal.jpg")
     breakfast_menu.add_item("Upma", 35, "A savory South Indian dish made from dry-roasted semolina, typically seasoned with mustard seeds, curry leaves, and vegetables.", "upma.jpg")
+    breakfast_menu.add_item("Aapa", 35, "A savory South Indian dish made from dry-roasted semolina, typically seasoned with mustard seeds, curry leaves, and vegetables.", "upma.jpg")
+    breakfast_menu.add_item("dsdfsdf", 35, "A savory South Indian dish made from dry-roasted semolina, typically seasoned with mustard seeds, curry leaves, and vegetables.", "upma.jpg")
     
 
     # Adding items to Lunch menu
     lunch_menu = menu_manager.get_menu("Lunch")
-    lunch_menu.add_item("Chicken Biriyani", 150, "A flavorful Indian rice dish with aromatic basmati rice, chicken, and a blend of spices, cooked to perfection.", "chicken-biriyani.png")
-    lunch_menu.add_item("Full Meals", 80, "A comprehensive and wholesome Indian meal that includes a variety of dishes such as rice, chapati, curry, dal, vegetables, and sometimes dessert, providing a balanced dining experience.", "meals.jpg")
-    lunch_menu.add_item("Mutton Biriyani", 200, "Fragrant and spiced rice preparation with tender mutton, creating a delicious and hearty Indian meal.", "mutton-biriyani.jpg")
+    lunch_menu.add_item("Full Meals", 80, "An assorted Indian menu comprising rice, chapati, curry, dal, vegetables, and an occasional dessert provides a delightful and well-balanced dining experience.", "meals.jpg")
+    lunch_menu.add_item("Chicken Biriyani", 150, "A fragrant Indian rice delicacy prepared with aromatic basmati rice, chicken, and a skillfully crafted mix of spices, cooked to perfection.", "chicken-biriyani.png")
+    lunch_menu.add_item("Mutton Biriyani", 200, "The rice is parboiled, infused with saffron or food color, and layered with the marinated mutton to create a visually appealing biryani.", "mutton-biriyani.jpg")
     lunch_menu.add_item("Sandwich", 160, "A versatile and convenient meal, typically consisting of layers of ingredients such as bread, vegetables, cheese, and meats.", "sandwich.jpg")
     lunch_menu.add_item("Sambar Rice", 30, "A comforting South Indian dish where rice is combined with sambar, a tangy and spicy lentil-based vegetable stew.", "sambar.jpg")
     lunch_menu.add_item("Veg Fried Rice", 80, "Stir-fried rice with mixed vegetables, often seasoned with soy sauce and spices, creating a flavorful and quick vegetarian dish.", "veg-fried-rice.jpg")
@@ -38,28 +40,28 @@ if __name__ == "__main__":
     lunch_menu.add_item("Pizza", 100, "Oven-baked flatbread topped with tomato sauce, cheese, and various toppings, a popular Italian dish enjoyed worldwide.", "pizza.jpg")
 
     # Adding items to Snacks menu
-    snacks_menu = menu_manager.get_menu("Snacks")
-    snacks_menu.add_item("Nachos", 8.99, "Loaded nachos")
-    snacks_menu.add_item("Popcorn", 3.49, "Buttered popcorn")
-    snacks_menu.add_item("Mozzarella Sticks", 7.99, "Crispy mozzarella sticks")
-    snacks_menu.add_item("Chicken Wings", 9.99, "Spicy chicken wings")
-    snacks_menu.add_item("Hummus and Pita", 6.49, "Creamy hummus with pita bread")
+    # snacks_menu = menu_manager.get_menu("Snacks")
+    # snacks_menu.add_item("Nachos", 8.99, "Loaded nachos")
+    # snacks_menu.add_item("Popcorn", 3.49, "Buttered popcorn")
+    # snacks_menu.add_item("Mozzarella Sticks", 7.99, "Crispy mozzarella sticks")
+    # snacks_menu.add_item("Chicken Wings", 9.99, "Spicy chicken wings")
+    # snacks_menu.add_item("Hummus and Pita", 6.49, "Creamy hummus with pita bread")
 
-    # Adding items to Drinks menu
-    drinks_menu = menu_manager.get_menu("Drinks")
-    drinks_menu.add_item("Coffee", 3.49, "Hot brewed coffee")
-    drinks_menu.add_item("Tea", 2.99, "Assam black tea")
-    drinks_menu.add_item("Milkshake", 4.99, "Chocolate milkshake")
-    drinks_menu.add_item("Smoothie", 5.49, "Mixed berry smoothie")
-    drinks_menu.add_item("Soda", 2.29, "Assorted soft drinks")
+    # # Adding items to Drinks menu
+    # drinks_menu = menu_manager.get_menu("Drinks")
+    # drinks_menu.add_item("Coffee", 3.49, "Hot brewed coffee")
+    # drinks_menu.add_item("Tea", 2.99, "Assam black tea")
+    # drinks_menu.add_item("Milkshake", 4.99, "Chocolate milkshake")
+    # drinks_menu.add_item("Smoothie", 5.49, "Mixed berry smoothie")
+    # drinks_menu.add_item("Soda", 2.29, "Assorted soft drinks")
 
-    # Adding items to Dessert menu
-    dessert_menu = menu_manager.get_menu("Dessert")
-    dessert_menu.add_item("Cake", 7.99, "Chocolate cake")
-    dessert_menu.add_item("Ice Cream", 4.49, "Vanilla ice cream")
-    dessert_menu.add_item("Cheesecake", 8.99, "New York-style cheesecake")
-    dessert_menu.add_item("Fruit Tart", 6.49, "Fresh fruit tart")
-    dessert_menu.add_item("Brownie", 5.99, "Fudgy chocolate brownie")
+    # # Adding items to Dessert menu
+    # dessert_menu = menu_manager.get_menu("Dessert")
+    # dessert_menu.add_item("Cake", 7.99, "Chocolate cake")
+    # dessert_menu.add_item("Ice Cream", 4.49, "Vanilla ice cream")
+    # dessert_menu.add_item("Cheesecake", 8.99, "New York-style cheesecake")
+    # dessert_menu.add_item("Fruit Tart", 6.49, "Fresh fruit tart")
+    # dessert_menu.add_item("Brownie", 5.99, "Fudgy chocolate brownie")
 
     menus = {
         "Breakfast": menu_manager.get_menu("Breakfast"),
