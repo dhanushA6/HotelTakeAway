@@ -14,7 +14,11 @@ def category(name):
 
 @app.route('/cart')
 def cart():
-    return redirect(url_for('index'))
+    return render_template('cart.html', page_name="Cart")
+
+@app.route('/orders')
+def orders():
+    return render_template('orders.html', page_name="Orders")
 
 if __name__ == '__main__':
     app.run(debug=True)
