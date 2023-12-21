@@ -115,3 +115,10 @@ def cart_items():
         # If file doesn't exist, create a new cart object
         cart = Cart()
     return cart.get_cart_items()
+
+def get_cart_total():
+    cart = cart_items()
+    total = 0
+    for item in cart:
+        total += item.price
+    return total
