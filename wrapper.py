@@ -134,8 +134,8 @@ def get_cart_total():
     cart = cart_items()
     total = 0
     for item in cart:
-        total += item.price
+        total += int(item.price)
     return total
 
-def create_item( name, price, description, img, category, available=True):
-        return MenuItem(name, price, description, img, category, available)
+def create_item(name, price, description, img, category, available=True):
+    return MenuItem(name, price, description, img, category, available)
