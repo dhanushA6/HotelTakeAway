@@ -37,6 +37,7 @@ class Order(ABC):
 
 class NormalOrder(Order):
     def __init__(self, items):
+        self.type = 'normal'
         super().__init__(items)
 
     def display_order(self):
@@ -46,6 +47,7 @@ class NormalOrder(Order):
         print("Normal Order:")
 class PriorityOrder(Order):
     def __init__(self, items):
+        self.type = 'priority'
         super().__init__(items)
 
     def display_order(self):

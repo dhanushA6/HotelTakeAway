@@ -13,4 +13,9 @@ class MenuItem:
         f'{self.description}', ' '*(25- len(self.description)), f'{self.available}')
 
     def get_attrs(self):
-        return [self.name, self.price, self.description,  self.img, self.available]
+        return [self.name, self.price, self.description,  self.img, self.available, self]
+    
+
+    
+        
+
