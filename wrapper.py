@@ -139,3 +139,22 @@ def get_cart_total():
 
 def create_item(name, price, description, img, category, available=True):
     return MenuItem(name, price, description, img, category, available)
+
+
+def get_cart_item_names():
+    cart = load_cart()
+    cart_names = []
+    cart_dict = cart.get_cart_items()
+    for item  in cart_dict:
+        cart_names.append(item.name)
+    return cart_names
+
+def load_cart():
+    try:
+        # Try to load the existing cart object
+        with open('cart.pkl', 'rb') as file:
+            cart = pickle.load(file)
+    except FileNotFoundError:
+        # If file doesn't exist, create a new cart object
+        cart = Cart()
+    return cart
