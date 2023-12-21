@@ -133,8 +133,8 @@ def cart_items():
 def get_cart_total():
     cart = cart_items()
     total = 0
-    for item in cart:
-        total += int(item.price)
+    for item, qty in cart.items():
+        total += int(item.price) * qty
     return total
 
 def create_item(name, price, description, img, category, available=True):
