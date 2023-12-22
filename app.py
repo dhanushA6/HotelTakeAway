@@ -40,6 +40,10 @@ def checkout():
 def orders():
     return render_template('orders.html', page_name="Orders")
 
+@app.route('/about')
+def about():
+    return render_template('about.html', page_name="About")
+
 @app.route('/api/cart/add', methods=['POST'])
 def add_to_cart():
     if request.method == 'POST':

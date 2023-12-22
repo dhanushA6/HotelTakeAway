@@ -7,10 +7,10 @@
 
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="navbar-nav fs-5 mb-md-0 ms-auto">
-                {% for item in ['Cart', 'Orders'] %}
+                {% for item in ['Cart', 'About'] %}
                 <li class="nav-item mx-2">
-                    <a class="nav-link{% if page_name == item %} active{% endif %}" href="/{{ item|lower }}"><i
-                class="bi {% if item == 'Cart' %}bi-cart-plus{% elif item == 'Orders' %}bi-bag{% endif %} me-1"></i>{{ item }}</a>
+                    <a class="nav-link{% if page_name == item %} active{% endif %}" href="/{{ item|lower }}">
+                        <i class="bi {% if item == 'Cart' %}bi-cart-plus{% elif item == 'About' %}bi-info-circle{% endif %} me-1"></i>{{ item }}</a>
                 </li>
                 {% endfor %}
             </ul>
