@@ -106,7 +106,7 @@ if __name__ == "__main__":
  
             # Choosing a payment strategy
             payment_option = input("Enter payment option (PayPal / GooglePay/Cash): ").lower()
-            payment = wp.create_payment_obj()
+            #payment = wp.create_payment_obj()
             wp.do_payment(payment_option, new_order)
             wp.push_orders(new_order)
 
