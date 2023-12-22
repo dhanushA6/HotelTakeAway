@@ -16,15 +16,15 @@
                         <div class="row">
                             <div class="col-12 mb-3">
                                 <label for="user-fullname" class="form-label">Full Name</label>
-                                <input type="text" name="user-fullname" class="form-control" id="user-fullname">
+                                <input type="text" name="user-fullname" class="form-control" id="user-fullname" value="{{e_session[2]}}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="user-email" class="form-label">Email</label>
-                                <input type="email" name="user-email" class="form-control" id="user-email">
+                                <input type="email" name="user-email" class="form-control" id="user-email" value="{{e_session[3]}}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="user-phoneno" class="form-label">Phone Number</label>
-                                <input type="number" name="user-phoneno" class="form-control" id="user-phoneno">
+                                <input type="number" name="user-phoneno" class="form-control" id="user-phoneno" value="{{e_session[1]}}">
                             </div>
                         </div>
                     </div>
@@ -33,9 +33,9 @@
                         <hr>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <input class="form-check-input me-1" type="radio" name="payment-method" value="card" id="cardRadio" checked>
-                                <label class="form-check-label stretched-link" for="cardRadio">Card payment</label>
-                                <p class="form-text ms-4 m-0">VISA, Mastercard and American Express</p>
+                                <input class="form-check-input me-1" type="radio" name="payment-method" value="cash" id="cardRadio" checked>
+                                <label class="form-check-label stretched-link" for="cardRadio">Cash payment</label>
+                                <!-- <p class="form-text ms-4 m-0">VISA, Mastercard and American Express</p> -->
                             </li>
                             <li class="list-group-item">
                                 <input class="form-check-input me-1" type="radio" name="payment-method" value="paypal" id="paypalRadio">
@@ -43,7 +43,7 @@
                                 <p class="form-text ms-4 m-0">Pay using PayPal</p>
                             </li>
                             <li class="list-group-item">
-                                <input class="form-check-input me-1" type="radio" name="payment-method" value="gpay" id="gpayRadio">
+                                <input class="form-check-input me-1" type="radio" name="payment-method" value="googlepay" id="gpayRadio">
                                 <label class="form-check-label stretched-link" for="gpayRadio">Google Pay</label>
                                 <p class="form-text ms-4 m-0">Pay using Gpay wallet</p>
                             </li>
