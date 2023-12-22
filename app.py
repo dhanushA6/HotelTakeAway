@@ -28,17 +28,37 @@ def cart():
 def checkout():
     if request.method == "GET":
         total = wp.get_cart_total()
-        return render_template("checkout.html", page_name="Checkout", cart_total=total)
+        sess_var = ['u_payment', 'u_phone', 'u_fullname', 'u_email']
+        result = chk_sess_var(sess_var)
+        new = []
+        if result:
+            new = [session['u_payment'], session['u_phone'], session['u_fullname'], session['u_email']]
+        return render_template("checkout.html", page_name="Checkout", cart_total=total, e_session=new)
     else:
         session['u_payment'] = request.form['payment-method']
         session['u_phone'] = request.form['user-phoneno']
         session['u_fullname'] = request.form['user-fullname']
         session['u_email'] = request.form['user-email']
-        return redirect(url_for('orders'))
+        return redirect(url_for('bill'))
 
 @app.route('/checkout/bill')
-def orders():
-    return render_template('bill.html', page_name="Bill")
+def bill():
+    sess_keys = ['u_fullname', 'u_phone', 'u_email', 'u_payment']
+    sess_values = [session['u_fullname'], session['u_phone'], session['u_email']]
+    result = chk_sess_var(sess_keys)
+    if result == True and wp.cart_items():
+        cust = wp.create_customer(
+            sess_values[0], sess_values[1], sess_values[2]
+        )
+        new_order = wp.create_order(cust)
+        wp.assign_token_and_datetime(new_order)
+        token = new_order.token
+        cart_items = wp.get_ordered_cart_items(new_order)            
+        total_summary = wp.get_ordered_bill_total(new_order)
+        order_dt = [new_order.order_date, new_order.order_time]
+        return render_template('bill.html', page_name="Bill", token=token, total=total_summary, items=cart_items, user=sess_values, order_dt=order_dt)
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/about')
 def about():
@@ -86,6 +106,14 @@ def update_cart():
             )
             result = wp.add_item_to_cart(new, item['qty'])
         return jsonify({"message": result})
+
+def chk_sess_var(variables: list):
+    missing_variables = [var for var in variables if var not in session]
+
+    if not missing_variables:
+        return True
+    else:
+        return False
 
 if __name__ == '__main__':
     app.run(debug=True)
