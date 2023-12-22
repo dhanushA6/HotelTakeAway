@@ -217,6 +217,31 @@ $('.items-decrease').click(function(e) {
     updateOrderSummary()
 });
 
+// Empty cart
+$('.btn-empty-cart').on('click', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var token = $this.data('token');
+
+    data = {
+        "token": parseInt(token)
+    }
+
+    $.ajax({
+        url: "/api/cart/empty",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function() {
+            window.location.href = "/"
+        },
+        error: function() {
+            $this.text("Can't empty the cart")
+            console.error("Can't empty the cart");
+        }
+    });
+});
+
 if (window.location.pathname == '/checkout') {
     $(document).ready(function() {
         // Function to check if all form fields are filled
