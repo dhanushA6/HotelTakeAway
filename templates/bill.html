@@ -3,95 +3,123 @@
 <div class="container my-5">
     <label class="fs-5 mb-3"><a href="/" class="text-decoration-none text-body-tertiary">Home</a> - <a href="/orders" class="text-decoration-none text-body">Bill</a></label>
     <h4 class="fw-semibold display-6">My Bill</h4>
-    {% if orders|length > 0 %}
-    <table class="table table-hover">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">Order #</th>
-                <th scope="col">Date</th>
-                <th scope="col">Total</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            {% for order in orders %}
-            <tr class="text-center">
-                <th scope="row"># {{order[0]}}</th>
-                <td>{{order[2]}}</td>
-                <td>₹ {{order[4]}}</td>
-                <td>
-                    {% if order[3] == 'Pending' %}
-                    <span class="badge rounded-pill text-bg-danger">{{order[3]}}</span> {% else %}
-                    <span class="badge rounded-pill text-bg-success">Delivered</span> {% endif %}
-                </td>
-                <td>
-                    <a href="/orders/{{order[0]}}" role="button" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></a>
-                    <a role="button" class="btn btn-sm btn-danger btn-remove-order" data-id="{{order[0]}}"><i class="bi bi-trash"></i></a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <div class="mt-5 my-3">
-        <div class="d-flex align-items-center justify-content-center mb-3">
-            <div class="empty-cart text-body-tertiary">
-                <i class="bi bi-cart-x display-1"></i>
-            </div>
-            <div class="empty-cart-info text-body-tertiary ms-3 mt-3">
-                <h4 class="fw-normal mb-1">No orders found!</h4>
-                <p class="lead">No orders found!</p>
-            </div>
-        </div>
-        <div class="d-flex align-items-center justify-content-center mt-4">
-            <a role="button" class="btn btn-sm btn-outline-secondary rounded-0" href="/"><i
-                class="bi bi-arrow-left me-2"></i>Continue shopping</a>
-        </div>
-    </div>
-    {% endif %}
-</div>
-{% if orders|length > 0 %}
-<div class="py-5 py-lg-6 bg-gray">
     <div class="container">
-        <div class="row">
-            <div class="py-4 col-lg-3 col-sm-6">
-                <div class="d-flex align-items-center justify-content-center">
-                    <i class="bi bi-truck my-auto mx-3 fs-3"></i>
-                    <div>
-                        <h6 class="text-sm mb-1">Free shipping &amp; return</h6>
-                        <p class="text-muted fw-light text-sm mb-0">Free Shipping over ₹2000</p>
-                    </div>
-                </div>
-            </div>
-            <div class="py-4 col-lg-3 col-sm-6">
-                <div class="d-flex align-items-center justify-content-center">
-                    <i class="bi bi-coin my-auto mx-3 fs-3"></i>
-                    <div>
-                        <h6 class="text-sm mb-1">Money back guarantee</h6>
-                        <p class="text-muted fw-light text-sm mb-0">30 Days Money Back Guarantee</p>
-                    </div>
-                </div>
-            </div>
-            <div class="py-4 col-lg-3 col-sm-6">
-                <div class="d-flex align-items-center justify-content-center">
-                    <i class="bi bi-percent my-auto mx-3 fs-3"></i>
-                    <div>
-                        <h6 class="text-sm mb-1">Best prices</h6>
-                        <p class="text-muted fw-light text-sm mb-0">Always the best prices</p>
-                    </div>
-                </div>
-            </div>
-            <div class="py-4 col-lg-3 col-sm-6">
-                <div class="d-flex align-items-center justify-content-center">
-                    <i class="bi bi-person my-auto mx-3 fs-3"></i>
-                    <div>
-                        <h6 class="text-sm mb-1">+91 75398 12346</h6>
-                        <p class="text-muted fw-light text-sm mb-0">24/7 Available Support</p>
+        <div class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card bg-body-tertiary">
+                    <div class="card-body p-0">
+                        <div class="invoice-container">
+                            <div class="invoice-header px-3 py-3 mb-3">
+                                <div class="row gutters">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                        <a href="/" class="invoice-logo fs-4 text-decoration-none text-body">
+										HFC
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <address class="text-md-end">
+										Maxwell admin Inc, 45 NorthWest Street.<br>
+										Sunrise Blvd, San Francisco.<br>
+										98757 23492
+									</address>
+                                    </div>
+                                </div>
+                                <div class="row gutters">
+                                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                                        <div class="invoice-details">
+                                            <address>
+											Alex Maxwell<br>
+											8974327949<br>
+                                            test@mail.com
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 text-md-end">
+                                        <div class="invoice-details">
+                                            <div class="invoice-num">
+                                                <div>Invoice - #009</div>
+                                                <div>January 10th 2020</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invoice-body row justify-content-center">
+                                <div class="row gutters">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table mb-4 m-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Items</th>
+                                                        <th>Quantity</th>
+                                                        <th>Sub Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr colspan="2">
+                                                        <td>
+                                                            Wordpress Template
+                                                            <p class="m-0 text-muted">
+                                                                Reference site about Lorem Ipsum, giving information on its origins.
+                                                            </p>
+                                                        </td>
+                                                        <td>9</td>
+                                                        <td>₹5000.00</td>
+                                                    </tr>
+                                                    <tr colspan="2">
+                                                        <td>
+                                                            Maxwell Admin Template
+                                                            <p class="m-0 text-muted">
+                                                                As well as a random Lipsum generator.
+                                                            </p>
+                                                        </td>
+                                                        <td>5</td>
+                                                        <td>₹100.00</td>
+                                                    </tr>
+                                                    <tr colspan="2">
+                                                        <td>
+                                                            Unify Admin Template
+                                                            <p class="m-0 text-muted">
+                                                                Lorem ipsum has become the industry standard.
+                                                            </p>
+                                                        </td>
+                                                        <td>6</td>
+                                                        <td>₹49.99</td>
+                                                    </tr>
+                                                    <tr colspan="2">
+                                                        <td>&nbsp;</td>
+                                                        <td>
+                                                            <p>
+                                                                Subtotal<br> Shipping<br> Tax
+                                                                <br>
+                                                            </p>
+                                                            <h5 class="text-success"><strong>Grand Total</strong></h5>
+                                                        </td>
+                                                        <td>
+                                                            <p>
+                                                                ₹5000.00<br> ₹10.00
+                                                                <br> ₹00.00
+                                                                <br>
+                                                            </p>
+                                                            <h5 class="text-success"><strong>₹5150.99</strong></h5>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <button class="btn btn-primary btn-finish-takeaway">Finish</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
-{% endif %} {% endblock %}
+{% endblock %}
