@@ -18,7 +18,7 @@
                             <div class="col-md-5 col-12 product-info-section">
                                 <a class="cart-remove close mt-3 d-md-none" href="#"></a>
                                 <div class="d-flex align-items-center">
-                                    <a href="/products/{{item.img}}"><img alt="{{item.img}}" src="{{ url_for('static', filename='products/' + item.category + '/' + item.img) }}" width="80"> </a>
+                                    <a href="/category/{{item.category|lower}}"><img alt="{{item.img}}" src="{{ url_for('static', filename='products/' + item.category + '/' + item.img) }}" width="80"> </a>
                                     <div class="cart-title text-start ms-3">
                                         <a class="text-body text-decoration-none" href="/category/{{item.category|lower}}"><strong class="product-name">{{item.name}}</strong>
                                         </a>

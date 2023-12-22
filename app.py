@@ -36,9 +36,13 @@ def checkout():
         session['u_email'] = request.form['user-email']
         return redirect(url_for('orders'))
 
-@app.route('/orders')
+@app.route('/checkout/bill')
 def orders():
-    return render_template('orders.html', page_name="Orders")
+    return render_template('bill.html', page_name="Bill")
+
+@app.route('/about')
+def about():
+    return render_template('about.html', page_name="About")
 
 @app.route('/api/cart/add', methods=['POST'])
 def add_to_cart():
