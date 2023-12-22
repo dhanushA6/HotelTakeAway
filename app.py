@@ -46,7 +46,7 @@ def bill():
     sess_keys = ['u_fullname', 'u_phone', 'u_email', 'u_payment']
     result = chk_sess_var(sess_keys)
     if result == True and wp.cart_items():
-        sess_values = [session['u_fullname'], session['u_phone'], session['u_email']]
+        sess_values = [session['u_fullname'], session['u_phone'], session['u_email'], session['u_payment']]
         cust = wp.create_customer(
             sess_values[0], sess_values[1], sess_values[2]
         )
@@ -55,7 +55,10 @@ def bill():
         token = new_order.token
         cart_items = wp.get_ordered_cart_items(new_order)            
         total_summary = wp.get_ordered_bill_total(new_order)
-        order_dt = [new_order.order_date, new_order.order_time]
+        order_dt = [new_order.order_date, new_order.order_time, new_order.type, new_order.is_paid]
+        wp.do_payment(session['u_payment'], new_order)
+        wp.push_orders(new_order)
+        
         return render_template('bill.html', page_name="Bill", token=token, total=total_summary, items=cart_items, user=sess_values, order_dt=order_dt)
     else:
         return redirect(url_for('index'))
