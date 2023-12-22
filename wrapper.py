@@ -232,6 +232,21 @@ def create_customer(name, ph_no, email):
 def create_payment_obj():
     return PaymentStrategy()
 
+def do_payment(payment_option, new_order):
+
+    if payment_option == "paypal":
+                payment_obj = assign_strategy(new_order, payment_option)
+                print("Payment Object: ",payment_obj)
+                make_payment_for_order(payment_obj, new_order)
+    elif payment_option == "googlepay":
+        payment_obj = assign_strategy(new_order, payment_option)
+        make_payment_for_order(payment_obj, new_order)
+    elif payment_option.lower() == "cash":
+        payment_obj = assign_strategy(new_order, payment_option)
+        make_payment_for_order(payment_obj, new_order)
+    else:
+        raise ValueError("Invalid payment option")
+
 
 
 

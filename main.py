@@ -107,19 +107,7 @@ if __name__ == "__main__":
             # Choosing a payment strategy
             payment_option = input("Enter payment option (PayPal / GooglePay/Cash): ").lower()
             payment = wp.create_payment_obj()
-            if payment_option == "paypal":
-                payment_obj = wp.assign_strategy(new_order, payment_option)
-                print("Payment Object: ",payment_obj)
-                wp.make_payment_for_order(payment_obj, new_order)
-            elif payment_option == "googlepay":
-                payment_obj = wp.assign_strategy(new_order, payment_option)
-                wp.make_payment_for_order(payment_obj, new_order)
-            elif payment_option.lower() == "cash":
-                payment_obj = wp.assign_strategy(new_order, payment_option)
-                wp.make_payment_for_order(payment_obj, new_order)
-            else:
-                raise ValueError("Invalid payment option")
-
+            wp.do_payment(payment_option, new_order)
             wp.push_orders(new_order)
 
             # Displaying order details
