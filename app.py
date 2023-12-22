@@ -44,9 +44,9 @@ def checkout():
 @app.route('/checkout/bill')
 def bill():
     sess_keys = ['u_fullname', 'u_phone', 'u_email', 'u_payment']
-    sess_values = [session['u_fullname'], session['u_phone'], session['u_email']]
     result = chk_sess_var(sess_keys)
     if result == True and wp.cart_items():
+        sess_values = [session['u_fullname'], session['u_phone'], session['u_email']]
         cust = wp.create_customer(
             sess_values[0], sess_values[1], sess_values[2]
         )
