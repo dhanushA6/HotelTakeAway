@@ -78,9 +78,7 @@ def make_cart_empty():
     except FileNotFoundError:
         # If file doesn't exist, create a new cart object
         cart = Cart()
-
     cart.orders = {}
-
     with open('cart.pkl', 'wb') as file:
         pickle.dump(cart, file)
         print('Item Added to cart Successfully')
