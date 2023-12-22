@@ -3,7 +3,9 @@ from model.order_manage import *
 from model.cart import SingletonMeta, Cart
 from model.orders import Orders
 import pickle, os
-
+import random
+from datetime import datetime
+from model.customer import Customer
 # Path Constants
 CONFIG_PATH = os.path.dirname(os.path.realpath(__file__))
 APP_PATH = os.path.abspath(os.path.join(CONFIG_PATH, '..'))
@@ -37,19 +39,6 @@ def dump_menus(menus):
             pickle.dump(menus, file)
     except Exception as e:
         print(f"Error saving menus: {e}")
-
-
-
-def create_tokens():
-    return 100
-
-def create_order( cart_items):
-    new_order = OrderFactory.create_order(cart_items)
-    order_type = new_order.type
-    token_number = create_tokens()
-    new_order.token = token_number
-    total_amount = new_order.calculate_bill()
-    
 
 
 def add_item_to_cart(item_add, qty):
@@ -160,12 +149,101 @@ def load_cart():
         cart = Cart()
     return cart
 
+#----------------------------- Orders Section-------------------------------------
 def push_orders(order):
-    orders= Orders()
-    orders.add_order(order)
-    orders_list = orders.orders_data
+
+    try:
+        with open('order.pkl', 'rb') as file:
+            orders_list = pickle.load(file)
+    except FileNotFoundError:
+        orders_list = []
+    orders_list.append(order)
     with open('order.pkl', 'wb') as file:
         pickle.dump(orders_list, file)
-        print('Item Added to cart Successfully')
+        print('Order Added Successfully')
+        file.close()
+
+def create_order(cust_obj):
+    cart_obj = load_cart()
+    cart_dict = cart_obj.get_cart_items()
+    new_order = OrderFactory.create_order(cart_dict, cust_obj)
+    return new_order
+
+def create_token():
+    return random.randint(100, 999)
+
+def assign_token_and_datetime(new_order):
+    generated_token = create_token()
+    new_order.token = generated_token
+    current_datetime = datetime.now()
+    current_date = current_datetime.date()
+    current_time = current_datetime.time()
+    new_order.order_date = current_date
+    new_order.order_time = current_time.strftime("%H:%M:%S")
+    print("Token assigned to the order ")
+
+def get_ordered_cart_items(new_order):
+    return new_order.items
+
+def get_ordered_bill_total(new_order):
+    items = new_order.items
+    total = 0
+    for item, qty in items.items():
+        total += int(item.price) * int(qty)
+    return total
+
+def assign_strategy(new_order, payment_strategy):
+    if payment_strategy == "paypal":
+        paypal = PayPalPayment()
+        new_order.payment_strategy = paypal
+        print("Paypal Payment Strategy assigned Succesfully")
+        return paypal
+    elif payment_strategy == "googlepay":
+        google_pay = GooglePayPayment()
+        new_order.payment_strategy = google_pay
+        print("Google pay Payment Strategy assigned Succesfully")
+        return google_pay
+    elif payment_strategy== "cash": 
+        cash = CashPayment()
+        new_order.payment_strategy = cash
+        print("Cash Payment Strategy assigned Succesfully")
+        return cash
+    
+def make_payment_for_order(payment_obj, new_order):
+    bill_total = get_ordered_bill_total(new_order)
+    new_order.is_paid = True
+    payment_obj.make_payment(bill_total)
+
+def get_orders_list():
+    try:
+        # Try to load the existing cart object
+        with open('order.pkl', 'rb') as file:
+            order_list = pickle.load(file)
+            file.close()
+        return order_list
+    except FileNotFoundError:
+        # If file doesn't exist, create a new cart object
+        print("No Order is Created")
+        return False
+    
+def create_customer(name, ph_no, email):
+    return Customer(name, ph_no, email)
+
+def create_payment_obj():
+    return PaymentStrategy()
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
 
 

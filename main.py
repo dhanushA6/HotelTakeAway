@@ -10,16 +10,13 @@ if __name__ == "__main__":
         menus = pickle.load(f)
         f.close()
     
-    try:
-        # Try to load the existing cart object
-        with open('order.pkl', 'rb') as file:
-            order_list = pickle.load(file)
-        for order in order_list:
-            print(order.order_time)
-            print(order.order_date)
-    except FileNotFoundError:
-        # If file doesn't exist, create a new cart object
-        print("No Order is Created")
+        order_list = wp.get_orders_list()
+        print("Order List: ", order_list)
+        if order_list:
+            for order in order_list:
+                print(order.order_time)
+                print(order.order_date)
+
     
     
     menu_manager = MenuManager()
@@ -89,18 +86,11 @@ if __name__ == "__main__":
             name = input("Enter the name: ").capitalize()
             ph_no = int(input("Enter your ph_no Number: "))
             email = input("Enter your email: ")
-            cust = Customer(name, ph_no, email)
-            new_order = OrderFactory.create_order(wp.cart_items(),cust)
-            current_datetime = datetime.now()
-            # Extract date and time separately
-            current_date = current_datetime.date()
-            current_time = current_datetime.time()
 
-            new_order.order_date = current_date
-            new_order.order_time = current_time.strftime("%H:%M:%S")
+            cust = wp.create_customer(name, ph_no, email)
 
-            print("Order created successfully with the following items:")
-            new_order.assign_token(generate_unique_token())
+            new_order =wp.create_order(cust)
+            wp.assign_token_and_datetime(new_order)
             print('-'*60)
             print('Token Number: ', new_order.token)
             # Displaying the order type
@@ -109,23 +99,26 @@ if __name__ == "__main__":
             new_order.display_order()
             print('-'*60)
             # Assigning a token to the order
-            print('Total Bill Amount: ',new_order. calculate_bill())
+            print('Total Bill Amount: ', wp.get_ordered_bill_total(new_order))
             print('-'*60)
 
 
  
             # Choosing a payment strategy
-            payment_option = input("Enter payment option (Credit Card / Cash): ")
-
-            if payment_option.lower() == "credit card":
-                new_order.set_payment_strategy(CreditCardPayment())
+            payment_option = input("Enter payment option (PayPal / GooglePay/Cash): ").lower()
+            payment = wp.create_payment_obj()
+            if payment_option == "paypal":
+                payment_obj = wp.assign_strategy(new_order, payment_option)
+                print("Payment Object: ",payment_obj)
+                wp.make_payment_for_order(payment_obj, new_order)
+            elif payment_option == "googlepay":
+                payment_obj = wp.assign_strategy(new_order, payment_option)
+                wp.make_payment_for_order(payment_obj, new_order)
             elif payment_option.lower() == "cash":
-                new_order.set_payment_strategy(CashPayment())
+                payment_obj = wp.assign_strategy(new_order, payment_option)
+                wp.make_payment_for_order(payment_obj, new_order)
             else:
                 raise ValueError("Invalid payment option")
-
-            # Making payment
-            new_order.make_payment()
 
             wp.push_orders(new_order)
 
