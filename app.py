@@ -110,6 +110,22 @@ def update_cart():
             result = wp.add_item_to_cart(new, item['qty'])
         return jsonify({"message": result})
 
+@app.route('/api/cart/empty', methods=['POST'])
+def cart_empty():
+    if request.method == 'POST':
+        data = request.get_json()
+        if data['token']:
+            sess_keys = ['u_fullname', 'u_phone', 'u_email', 'u_payment']
+            result = chk_sess_var(sess_keys)
+            if result:
+                session.clear()
+            result = wp.make_cart_empty()
+            return jsonify({'result': result})
+        else:
+            return jsonify({'result': False})   
+    else:
+        return redirect(url_for('index'))
+
 def chk_sess_var(variables: list):
     missing_variables = [var for var in variables if var not in session]
 
