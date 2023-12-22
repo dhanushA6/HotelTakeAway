@@ -84,8 +84,8 @@ def make_cart_empty():
     with open('cart.pkl', 'wb') as file:
         pickle.dump(cart, file)
         print('Item Added to cart Successfully')
-
     print("Cart got Empty")
+    return True
 
 def remove_cart_item(item_to_delete):
     try:
