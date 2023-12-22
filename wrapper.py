@@ -175,10 +175,14 @@ def create_token():
 def assign_token_and_datetime(new_order):
     generated_token = create_token()
     new_order.token = generated_token
+    
     current_datetime = datetime.now()
     current_date = current_datetime.date()
     current_time = current_datetime.time()
-    new_order.order_date = current_date
+    
+    format_date = current_date.strftime("%B %d, %Y")
+    
+    new_order.order_date = format_date
     new_order.order_time = current_time.strftime("%H:%M:%S")
     print("Token assigned to the order ")
 
