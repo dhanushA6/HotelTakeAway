@@ -1,7 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask_mail import Mail, Message
 import wrapper as wp
 
 app = Flask(__name__)
+mail = Mail(app)
+
+# configuration of mail 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'xxx@gmail.com'
+app.config['MAIL_PASSWORD'] = 'xxx'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 app.secret_key = "hfc"
 
@@ -58,6 +69,8 @@ def bill():
         order_dt = [new_order.order_date, new_order.order_time, new_order.type, new_order.is_paid]
         wp.do_payment(session['u_payment'], new_order)
         wp.push_orders(new_order)
+        
+        send_email(sess_values, token, total_summary, cart_items, order_dt)
         
         return render_template('bill.html', page_name="Bill", token=token, total=total_summary, items=cart_items, user=sess_values, order_dt=order_dt)
     else:
@@ -133,6 +146,20 @@ def chk_sess_var(variables: list):
         return True
     else:
         return False
+    
+def send_email(user, token, total, cart_items, order_dt):
+    
+    body = f"Invoice #{token} for Your Recent Orders via HFC"
+    msg = Message( 
+                    body,
+                    sender ='noreply@gmail.com',
+                    recipients = [f'{user[2]}'] 
+                ) 
+    view = render_template('mail.html', user=user, token=token, total=total, items=cart_items, order_dt=order_dt)
+    msg.html = view
+    if mail.send(msg):
+        return True
+    return False
 
 if __name__ == '__main__':
     app.run(debug=True)
