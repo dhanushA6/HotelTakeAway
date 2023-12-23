@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice for {user[0]}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .totals {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h4>Dear {{user[0]}},</h4>
+    <p>We hope this message finds you well and enjoying your recent orders with us. Thank you for choosing HFC!</p>
+    <p>Here's the invoice for your recent order(s):</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Items</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Replace the below rows with your data -->
+            {% for item, qty in items.items() %}
+            <tr>
+                <td>{{item.name}}</td>
+                <td>₹{{item.price}}</td>
+                <td>{{qty}}</td>
+                <td>₹{{item.price|int * qty}}</td>
+            </tr>
+            {% endfor %}
+            <!-- Add more rows as needed -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="totals">Subtotal</td>
+                <td class="totals">₹{{total}}</td> <!-- Total of each item -->
+            </tr>
+            <tr>
+                <td colspan="3" class="totals">GST</td>
+                <td class="totals">₹10</td> <!-- GST value -->
+            </tr>
+            <tr>
+                <td colspan="3" class="totals">Grand Total</td>
+                <td class="totals">₹{{total|int + 10}}</td> <!-- Grand total -->
+            </tr>
+        </tfoot>
+    </table>
+    <p>Payment mode - {{user[3]|capitalize}}</p>
+    <p>Placed on {{order_dt[0]}}, at {{order_dt[1]}}.</p>
+    <p>Thank you for your support. We are looking forward to serving you again.</p>
+    <p>Best regards,</p>
+    <p>HFC Takeaway</p>
+    <p>mail@hfchotel.co</p>
+</body>
+</html>
