@@ -114,6 +114,8 @@ def admin_remove():
     if request.method == 'GET':
         menu_items = wp.get_all_menu_items()
         return render_template('item_remove.html', page_name='Remove Item', admin=True, items=menu_items)
+    else:
+        return redirect(url_for('admin'))
 
 @app.route('/admin/items/update')
 def admin_update():
@@ -189,9 +191,13 @@ def remove_item_from_menu():
         data = request.get_json()
         name = data['name']
         category = data['category']
-        result = wp.remove_item_from_menu(name, category)
-        return jsonify({'result': result})
+        image = data['image']
 
+        if wp.remove_item_from_menu(name, category):
+            result = remove_image(image, category)
+            return jsonify({'result': result})
+        else:
+            return jsonify({'result': False})
 
 ################ Helper Functions ################
 def chk_sess_var(variables: list):
@@ -236,6 +242,17 @@ def save_image(name:str, image: object, category: str):
             return new_filename
         return False
     except:
+        return False
+
+def remove_image(filename: str, category: str):
+    try:
+        file_path = os.path.join('static/products', category, filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            return True
+        return False
+    except Exception as e:
+        print(f"Error: {e}")
         return False
 
 if __name__ == '__main__':

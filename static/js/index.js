@@ -273,10 +273,12 @@ $('.btn-remove-menu-item').on('click', function() {
     itemName = $(this).parents('.item-action').prev().prev().html();
     item_name = $(this).data('name');
     item_category = $(this).data('category');
+    item_image = $(this).data('image');
 
     var data = {
         "name": item_name,
-        "category": item_category
+        "category": item_category,
+        "image": item_image
     };
     $this = $(this).parents('.menu-item')
     console.log($this);
