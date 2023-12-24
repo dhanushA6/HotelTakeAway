@@ -11,12 +11,15 @@ if __name__ == "__main__":
         f.close()
     
         order_list = wp.get_orders_list()
-        print("Order List: ", order_list)
+        #print("Order List: ", order_list)
         if order_list:
-            for order in order_list:
-                print(order.order_time)
+             for order in order_list:
+                print(order.customer)
+                print(order.customer.name)
+                print(order.items)
+                print(order.payment_strategy)
                 print(order.order_date)
-
+                print(order.is_paid)
     
     
     menu_manager = MenuManager()

@@ -26,8 +26,8 @@ def get_menu_items(menu_type):
     menus = load_menus()
     if menu_type.capitalize() not in menus:
         return False
-    menu = menus[menu_type.capitalize()]
-    selected_items = menu.get_menu_items()
+    selected_items = menus[menu_type.capitalize()]
+    #selected_items = menu.get_menu_items()
     items_data = []
     for item in selected_items:
         items_data.append(item.get_attrs())
@@ -37,8 +37,8 @@ def get_all_menu_items():
     menus = load_menus()
     all_menu_items = {}
 
-    for menu_type, menu in menus.items():
-        selected_items = menu.get_menu_items()
+    for menu_type, menu_items in menus.items():
+        selected_items = menu_items
         items_data = []
         for item in selected_items:
             items_data.append(item.get_attrs())
@@ -259,22 +259,102 @@ def do_payment(payment_option, new_order):
         make_payment_for_order(payment_obj, new_order)
     else:
         raise ValueError("Invalid payment option")
+    
+#----------------  Admin Paneld Functionality -----------------------------
+def load_menu_data():
+    try:
+        with open('menu.pickle', 'rb') as f:
+            menus = pickle.load(f)
+            print("menus data Loaded Successfully")
+    except:
+        menu_manager = MenuManager()
+        breakfast_menu = menu_manager.get_menu("Breakfast")
+        dinner_menu = menu_manager.get_menu("Dinner")
+        lunch_menu = menu_manager.get_menu("Lunch")
+        today_menu = menu_manager.get_menu("TodayMenu")
+        dessert_menu = menu_manager.get_menu("Dessert")
+        snack_menu = menu_manager.get_menu("Snacks")
+        menus = {
+        "Breakfast": breakfast_menu.items,
+        "Lunch": lunch_menu.items,
+        "Snacks": snack_menu.items,
+        "TodayMenu": today_menu.items,
+        "Dinner": dinner_menu.items,
+        "Dessert": dessert_menu.items }    
+    return menus
+
+def assign_menu_data():
+
+    menu_manager = MenuManager()
+    menus = load_menu_data()
+
+    breakfast_menu = menu_manager.get_menu("Breakfast")
+    breakfast_menu.items = menus["Breakfast"]
+
+    dinner_menu = menu_manager.get_menu("Dinner")
+    dinner_menu.items = menus["Dinner"]
+    
+    lunch_menu = menu_manager.get_menu("Lunch")
+    lunch_menu.items = menus["Lunch"]
+
+    today_menu = menu_manager.get_menu("TodayMenu")
+    today_menu.items = menus["TodayMenu"]
+
+    dessert_menu = menu_manager.get_menu("Dessert")
+    dessert_menu.items = menus["Dessert"]
+
+    snack_menu = menu_manager.get_menu("Snacks")
+    snack_menu.items = menus["Snacks"]
+
+def dump_menu_data():
+    menu_manager = MenuManager()
+    breakfast_menu = menu_manager.get_menu("Breakfast")
+    dinner_menu = menu_manager.get_menu("Dinner")
+    lunch_menu = menu_manager.get_menu("Lunch")
+    today_menu = menu_manager.get_menu("TodayMenu")
+    dessert_menu = menu_manager.get_menu("Dessert")
+    snack_menu = menu_manager.get_menu("Snacks")
+    menus = {
+        "Breakfast": breakfast_menu.items,
+        "Lunch": lunch_menu.items,
+        "Snacks": snack_menu.items,
+        "TodayMenu": today_menu.items,
+        "Dinner": dinner_menu.items,
+        "Dessert": dessert_menu.items
+   
+    }
+
+    try:
+        with open('menu.pickle', 'wb') as file:
+            pickle.dump(menus, file)
+            print("Data Written Successfully")
+    except Exception as e:
+        print(f"Error saving menus: {e}")
+
+
 
 # function added by henry
 def add_item_to_menu(itemName: str, category: str, price: int, desc: str, imageName: str):
     manager = MenuManager()
+    assign_menu_data()
     name = itemName.capitalize()
     category = category.capitalize()
     menu = manager.get_menu(category)
     menu.add_item(name, int(price), desc, imageName, category)
-    menus = {
-        "Breakfast": manager.get_menu("Breakfast"),
-        "Lunch": manager.get_menu("Lunch"),
-        "Snacks": manager.get_menu("Snacks"),
-        "Drinks": manager.get_menu("Drinks"),
-        "Dinner": manager.get_menu("Dinner"),
-        "Dessert": manager.get_menu("Dessert")
-    }
 
+    dump_menu_data()
+    menus = load_menu_data()
+    print(f"Item {name} is added to {category} Successful")
     return True if dump_data(menus, 'menu.pickle') else False
 
+def remove_item_from_menu(itemName: str, category: str):
+    manager = MenuManager()
+    assign_menu_data()
+    name = itemName.capitalize()
+    category = category.capitalize()
+    menu = manager.get_menu(category)
+    menu.delete_item(name)
+    dump_menu_data()
+    menus = load_menu_data()
+    print(f"Item {name} is Removed from {category}")
+    return True if dump_data(menus, 'menu.pickle') else False
