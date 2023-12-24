@@ -33,12 +33,13 @@ def get_menu_items(menu_type):
         items_data.append(item.get_attrs())
     return items_data
 
-def dump_menus(menus):
+def dump_data(menus, filename):
     try:
-        with open('all_menus.pkl', 'wb') as file:
+        with open(filename, 'wb') as file:
             pickle.dump(menus, file)
+        return True
     except Exception as e:
-        print(f"Error saving menus: {e}")
+        print(f"Error saving pickle file: {e}")
 
 
 def add_item_to_cart(item_add, qty):
@@ -104,9 +105,6 @@ def remove_cart_item(item_to_delete):
                     pickle.dump(cart, file)
                     print('Cart item removed and Saved Successfully')
                 break
-  
-
-
 
 def cart_items():
     try:
@@ -235,7 +233,6 @@ def create_payment_obj():
     return PaymentStrategy()
 
 def do_payment(payment_option, new_order):
-
     if payment_option == "paypal":
                 payment_obj = assign_strategy(new_order, payment_option)
                 print("Payment Object: ",payment_obj)
@@ -249,18 +246,21 @@ def do_payment(payment_option, new_order):
     else:
         raise ValueError("Invalid payment option")
 
+# function added by henry
+def add_item_to_menu(itemName: str, category: str, price: int, desc: str, imageName: str):
+    manager = MenuManager()
+    name = itemName.capitalize()
+    category = category.capitalize()
+    menu = manager.get_menu(category)
+    menu.add_item(name, int(price), desc, imageName, category)
+    menus = {
+        "Breakfast": manager.get_menu("Breakfast"),
+        "Lunch": manager.get_menu("Lunch"),
+        "Snacks": manager.get_menu("Snacks"),
+        "Drinks": manager.get_menu("Drinks"),
+        "Dinner": manager.get_menu("Dinner"),
+        "Dessert": manager.get_menu("Dessert")
+    }
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
+    return True if dump_data(menus, 'menu.pickle') else False
 
