@@ -113,7 +113,9 @@ def admin_add():
 
 @app.route('/admin/items/remove')
 def admin_remove():
-    return render_template('item_remove.html', page_name='Remove Item', admin=True)
+    if request.method == 'GET':
+        menu_items = wp.get_all_menu_items()
+        return render_template('item_remove.html', page_name='Remove Item', admin=True, items=menu_items)
 
 @app.route('/admin/items/update')
 def admin_update():
