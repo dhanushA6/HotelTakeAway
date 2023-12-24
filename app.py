@@ -125,6 +125,11 @@ def admin_update():
 def admin_show_order():
     return render_template('show_orders.html', page_name='Show Orders', admin=True)
 
+@app.route('/admin/manage/menu-of-the-day')
+def admin_manage_menu_of_the_day():
+    menu_items = wp.get_all_menu_items()
+    return render_template('motd.html', page_name='Menu of the Day', admin=True, items=menu_items)
+
 ################ API Routes ################
 @app.route('/api/cart/add', methods=['POST'])
 def add_to_cart():
