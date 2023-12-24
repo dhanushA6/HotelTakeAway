@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import wrapper as wp
-load_dotenv()
 import os
+
+# Load env config
+load_dotenv()
 
 app = Flask(__name__)
 mail = Mail(app)
