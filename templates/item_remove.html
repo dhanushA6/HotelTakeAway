@@ -11,34 +11,38 @@
         <hr class="mb-3">
         <ul class="list-group list-group-flush">
             {% for i, j in items.items() %}
-            {% if i|capitalize == ct %}
-            <li class="list-group-item">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-4 m-0">
-                        <thead>
-                            <tr>
-                                <th colspan="2" scope="col">Items</th>
-                                <th class="text-center" colspan="2" scope="col">Price</th>
-                                <th class="text-center" colspan="2" scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in j %}
-                            <tr class="menu-item fade show">
-                                <td class="item-name" colspan="2">{{item[0]}}</td>
-                                <td class="item-price text-center" colspan="2">
-                                    <span class="badge text-bg-secondary">₹{{item[1]}}</span>
-                                </td>
-                                <td class="item-action text-center" colspan="2">
-                                    <button class="btn btn-sm btn-danger btn-remove-menu-item"  data-name="{{item[0]}}" data-category="{{i|lower}}" data-image="{{item[3]}}"><i class="bi bi-trash"></i></button>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </li>
-            {% endif %}
+                {% if i|capitalize == ct %}
+                    {% if j|length == 0 %}
+                        <p class="text-danger mb-5">No items found!</p>
+                    {% else %}
+                        <li class="list-group-item">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-4 m-0">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" scope="col">Items</th>
+                                            <th class="text-center" colspan="2" scope="col">Price</th>
+                                            <th class="text-center" colspan="2" scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in j %}
+                                        <tr class="menu-item fade show">
+                                            <td class="item-name" colspan="2">{{item[0]}}</td>
+                                            <td class="item-price text-center" colspan="2">
+                                                <span class="badge text-bg-secondary">₹{{item[1]}}</span>
+                                            </td>
+                                            <td class="item-action text-center" colspan="2">
+                                                <button class="btn btn-sm btn-danger btn-remove-menu-item"  data-name="{{item[0]}}" data-category="{{i|lower}}" data-image="{{item[3]}}"><i class="bi bi-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
         </ul>
         {% endfor %}
