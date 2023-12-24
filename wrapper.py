@@ -421,6 +421,8 @@ def show_orders_data():
             items_data[item.name] = qty
         order_data.append(items_data)
         order_data.append(order.customer.name)
+        order_data.append(order.customer.email)
+        order_data.append(order.customer.ph_no)
         order_data.append(order.type)
         order_data.append(order.order_time)
 

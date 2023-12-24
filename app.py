@@ -121,8 +121,14 @@ def admin_remove():
 def admin_update():
     return render_template('item_update.html', page_name='Update Item', admin=True)
 
-@app.route('/admin/orders/show')
+@app.route('/admin/orders')
 def admin_show_orders():
+    data = wp.show_orders_data()
+    return render_template('show_orders.html', page_name='Show Orders', admin=True, data=data)
+
+@app.route('/admin/orders/show/<order>')
+def admin_show_orders_detail(order):
+    order_id = order
     data = wp.show_orders_data()
     return render_template('show_orders.html', page_name='Show Orders', admin=True, data=data)
 
