@@ -102,8 +102,8 @@ def admin_add():
         desc = request.form['desc']
         imageName = save_image(name, image, category)
 
-        if wp.add_item_to_menu(name, category, price, desc, image.filename):
-            if imageName != False:
+        if imageName != False:
+            if wp.add_item_to_menu(name, category, price, desc, imageName):
                 return render_template('item_add.html', page_name='Add Item', admin=True, add=True, itemName=name, category=category)
         return render_template('item_add.html', page_name='Add Item', admin=True, add=False)
     else:
@@ -122,8 +122,9 @@ def admin_update():
     return render_template('item_update.html', page_name='Update Item', admin=True)
 
 @app.route('/admin/orders/show')
-def admin_show_order():
-    return render_template('show_orders.html', page_name='Show Orders', admin=True)
+def admin_show_orders():
+    data = wp.show_orders_data()
+    return render_template('show_orders.html', page_name='Show Orders', admin=True, data=data)
 
 @app.route('/admin/manage/menu-of-the-day')
 def admin_manage_menu_of_the_day():
