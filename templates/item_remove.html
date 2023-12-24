@@ -5,7 +5,7 @@
         <hr>
         <p class="mb-4 fw-light">Remove items from the menu with specific categories.</p>
     </div>
-    <div>
+    <div class="menu-list">
         {% for ct in ['Breakfast', 'Lunch', 'Snacks', 'Dinner'] %}
         <h3 class="fw-normal fs-4">{{ct}}</h3>
         <hr class="mb-3">
@@ -42,6 +42,7 @@
             {% endfor %}
         </ul>
         {% endfor %}
+        <a href="/admin" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a>
     </div>
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
         <div class="col-md-4 d-flex align-items-center">
