@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container my-5">
+  <div class="p-3">
+    <h3 class="fw-normal fs-4"><i class="bi bi-plus-circle me-2"></i>Add Item</h3>
+    <hr>
+  </div>
+  <div class="p-3">
+    <form class="form-control p-3" enctype="multipart/form-data" method="POST" action="/admin/items/add">
+      <p class="lead">Enter Item Details</p>
+      <hr>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Item Image</label>
+        <input class="form-control" type="file" name="image" id="formFile" accept=".jpg, .png" required>
+      </div>
+      <div class="mb-3">
+        <label for="inputName" class="form-label">Item Name</label>
+        <input type="text" name="name" class="form-control" id="inputName" autocomplete="off" required>
+      </div>
+      <div class="mb-3">
+        <label for="inputCategory" class="form-label">Category</label>
+        <select class="form-select" name="category" aria-label="Select Category" id="inputCategory" required>
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="snacks">Snacks</option>
+          <option value="dinner">Dinner</option>
+          <option value="drinks">Drinks</option>
+          <option value="desserts">Desserts</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="inputPrice" class="form-label">Item Price</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">₹</span>
+            <input type="number" name="price" class="form-control" id="inputPrice" required>
+          </div>
+      </div>
+      <div class="mb-5">
+        <label for="inputDescription" class="form-label">Description</label>
+          <div class="mb-3">
+            <textarea class="form-control" name="desc" id="inputDescription" rows="3" spellcheck="false" required></textarea>
+          </div>
+      </div>
+      <hr>
+      <div class="d-flex align-items-center justify-content-between">
+          <a href="/admin" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i>Add Item</button>
+      </div>
+    </form>
+  </div>
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+        <img src="{{ url_for('static', filename='eazycart-logo.svg') }}" width="30" height="24" />
+      </a>
+      <span class="mb-3 mb-md-0 text-body-secondary">© 2023 HFC , Inc</span>
+    </div>
+  </footer>
+</div>
+
+{% endblock %}
