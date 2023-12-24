@@ -24,9 +24,15 @@
                             {{i}}
                         </h5>
                     </div>
-                    {% set word = i.split(' ')[0] %}
+                    {% if i == 'Menu of the day' %}
+                        {% set word = i|replace(' ', '-') %}
+                    {% else %}
+                        {% set word = i.split(' ')[0] %}
+                    {% endif %}
                     {% if i == 'Show Orders' %}
                     <a href="/admin/orders/{{word|lower}}" class="stretched-link"></a>
+                    {% elif i == 'Menu of the day' %}
+                    <a href="/admin/manage/{{word|lower}}" class="stretched-link"></a>
                     {% else %}
                     <a href="/admin/items/{{word|lower}}" class="stretched-link"></a>
                     {% endif %}
