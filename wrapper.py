@@ -12,6 +12,24 @@ APP_PATH = os.path.abspath(os.path.join(CONFIG_PATH, '..'))
 pickle_name = CONFIG_PATH + "\\menu.pickle"
 
 
+def add_subscriber(email):
+    try:
+        with open("subscribers.pkl", 'rb') as file:
+            subscribers = pickle.load(file)
+            file.close()
+    except:
+        subscribers = []
+
+    if email not in subscribers:
+        subscribers.append(email)
+        print("Subscriber added Successfully....")
+
+    with open("subscribers.pkl", 'wb') as file :
+        pickle.dump(subscribers, file)
+        file.close()
+       
+
+
 def load_menus():
     try:
         with open(pickle_name, 'rb') as file:
@@ -55,6 +73,7 @@ def dump_data(menus, filename):
     except Exception as e:
         print(f"Error saving pickle file: {e}")
 
+#---------------- Cart Section ---------------------------------------
 
 def add_item_to_cart(item_add, qty):
     try:
@@ -176,6 +195,7 @@ def push_orders(order):
 def create_order(cust_obj):
     cart_obj = load_cart()
     cart_dict = cart_obj.get_cart_items()
+    add_subscriber(cust_obj.email)
     new_order = OrderFactory.create_order(cart_dict, cust_obj)
     return new_order
 
@@ -358,3 +378,74 @@ def remove_item_from_menu(itemName: str, category: str):
     menus = load_menu_data()
     print(f"Item {name} is Removed from {category}")
     return True if dump_data(menus, 'menu.pickle') else False
+
+#feature for showorders data
+#This is the Structure of the show_orders_data structure
+'''
+{
+    100: [
+        "order_token_1",
+        {
+            "item_name_1": quantity_1,
+            "item_name_2": quantity_2,
+            ...
+        },
+        "customer_name_1",
+        "order_type_1",
+        "order_time_1"
+    ],
+    101: [
+        "order_token_2",
+        {
+            "item_name_1": quantity_1,
+            "item_name_2": quantity_2,
+            ...
+        },
+        "customer_name_2",
+        "order_type_2",
+        "order_time_2"
+    ]
+}
+
+'''
+
+def show_orders_data():
+    order_list = get_orders_list()
+    show_orders_data = {}
+    key = 100
+    for order in order_list[:3]:
+        order_data = []
+        order_data.append(order.token)
+        items_data = {}
+        for item, qty in order.items.items():
+            items_data[item.name] = qty
+        order_data.append(items_data)
+        order_data.append(order.customer.name)
+        order_data.append(order.type)
+        order_data.append(order.order_time)
+
+        #Adding the data 's to show_orders_data 
+        show_orders_data[key] = order_data
+        key += 1
+    print("Orderst List data fetched successfully")
+    return show_orders_data
+
+def action(key_to_remove):
+
+    if key_to_remove in show_orders_data:
+        del show_orders_data[key_to_remove]
+        print(f"Entry with key {key_to_remove} removed successfully.")
+        return True
+    else:
+        print(f"Key {key_to_remove} not found in the dictionary.") 
+        return False
+    
+
+def get_subscriber():
+    try:
+        with open("subscribers.pkl", 'rb') as file:
+            subscribers = pickle.load(file)
+            file.close()
+    except:
+        subscribers = []
+    return subscribers
