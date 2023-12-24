@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container my-5">
+    <div class="p-3">
+        <h3 class="fw-normal fs-4">Orders List</h3>
+        <hr class="mb-4">
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Order #</th>
+                <th scope="col">Date</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for order in orders %}
+            <tr class="text-center">
+                <th scope="row"># {{order[0]}}</th>
+                <td>{{order[2]}}</td>
+                <td>₹ {{order[4]}}</td>
+                <td>
+                    {% if order[3] == 'Pending' %}
+                    <span class="badge rounded-pill text-bg-danger">{{order[3]}}</span> {% else %}
+                    <span class="badge rounded-pill text-bg-success">Delivered</span> {% endif %}
+                </td>
+                <td>
+                    <a href="/orders/{{order[0]}}" role="button" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></a>
+                    <a role="button" class="btn btn-sm btn-danger btn-remove-order" data-id="{{order[0]}}"><i class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <img src="{{ url_for('static', filename='eazycart-logo.svg') }}" width="30" height="24">
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 HFC   , Inc</span>
+        </div>
+    </footer>
+</div>
+
+
+{% endblock %}
