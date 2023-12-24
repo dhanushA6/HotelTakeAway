@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 import wrapper as wp
-import os
+import os, uuid
 
 # Load env config
 load_dotenv()
@@ -10,7 +11,7 @@ load_dotenv()
 app = Flask(__name__)
 mail = Mail(app)
 
-# configuration of mail 
+# Configuration of mail
 app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
 app.config['MAIL_PORT'] = os.getenv("MAIL_PORT")
 app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
@@ -87,13 +88,28 @@ def about():
     return render_template('about.html', page_name="About")
 
 ################ Admin routes ################
-@app.route('/admin')
+@app.route('/admin', strict_slashes=False)
 def admin():
     return render_template('admin.html', page_name='Admin Panel', admin=True)
 
-@app.route('/admin/items/add')
+@app.route('/admin/items/add', methods=['GET', 'POST'])
 def admin_add():
-    return render_template('item_add.html', page_name='Add Item', admin=True)
+    if request.method == 'POST':
+        name = request.form['name']
+        image = request.files['image']
+        category = request.form['category']
+        price = request.form['price']
+        desc = request.form['desc']
+        imageName = save_image(name, image, category)
+
+        if wp.add_item_to_menu(name, category, price, desc, image.filename):
+            if imageName != False:
+                return "SUCCESS: Item added!"
+            return "FAILED: Cannot save image!"
+        else:
+            return "FAILED: Cannot add item to menu!"
+    else:
+        return render_template('item_add.html', page_name='Add Item', admin=True)
 
 @app.route('/admin/items/remove')
 def admin_remove():
@@ -190,6 +206,28 @@ def send_email(user, token, total, cart_items, order_dt):
     if mail.send(msg):
         return True
     return False
+
+def save_image(name:str, image: object, category: str):
+    try:
+        if image.filename != '':
+            new_filename = secure_filename(name) + os.path.splitext(image.filename)[1]
+            save_path = os.path.join('static/products', category)
+
+            # Create category folder if not exists
+            if not os.path.exists(save_path):
+                os.makedirs(save_path)
+
+            # Check if the file already exists
+            while os.path.exists(os.path.join(save_path, new_filename)):
+                # If the filename already exists, add a unique identifier to the name
+                unique_id = str(uuid.uuid4().hex)[:6] 
+                new_filename = secure_filename(name + '_' + unique_id) + os.path.splitext(image.filename)[1]
+
+            image.save(os.path.join(save_path, new_filename))
+            return new_filename
+        return False
+    except:
+        return False
 
 if __name__ == '__main__':
     app.run(debug=True)
