@@ -14,13 +14,13 @@
         <hr class="mb-4">
     </div>
     <div class="row justify-content-center px-4">
-        {% for i in ['Add Item', 'Remove Item', 'Show Orders'] %}
+        {% for i in ['Add Item', 'Remove Item', 'Show Orders', 'Menu of the day'] %}
         <div class="col-lg-6 mb-3">
             <div class="card btn bg-body-tertiary h-100 border shadow">
                 <div class="card-body px-4">
                     <div class="text-center">
                         <h5 class="fw-normal">
-                            <i class="bi {% if i == 'Add Item' %} bi-plus-circle {% elif i == 'Remove Item' %} bi-dash-circle {% elif i == 'Update Item' %} bi-arrow-repeat {% elif i == 'Show Orders' %} bi-list-task {% endif %}"></i>
+                            <i class="bi {% if i == 'Add Item' %} bi-plus-circle {% elif i == 'Remove Item' %} bi-dash-circle {% elif i == 'Update Item' %} bi-arrow-repeat {% elif i == 'Show Orders' %} bi-border-width {% elif i == 'Menu of the day' %}bi-list-stars{% endif %}"></i>
                             {{i}}
                         </h5>
                     </div>
