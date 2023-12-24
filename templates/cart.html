@@ -39,7 +39,7 @@
                                             <div class="col-md-12 col-sm-3 col-5">
                                                 <div class="d-flex align-items-center">
                                                     <button type="button" class="items-decrease btn btn-items">-</button>
-                                                    <label class="text-center border-0 border-md product-quantity form-control" data-max="{{item.price}}">{{qty}}</label>
+                                                    <label class="text-center border-0 border-md product-quantity form-control" data-max="{{item.price|int * 100}}">{{qty}}</label>
                                                     <button type="button" class="items-increase btn btn-items">+</button></div>
                                             </div>
                                         </div>
