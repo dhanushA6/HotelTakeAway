@@ -33,6 +33,20 @@ def get_menu_items(menu_type):
         items_data.append(item.get_attrs())
     return items_data
 
+def get_all_menu_items():
+    menus = load_menus()
+    all_menu_items = {}
+
+    for menu_type, menu in menus.items():
+        selected_items = menu.get_menu_items()
+        items_data = []
+        for item in selected_items:
+            items_data.append(item.get_attrs())
+
+        all_menu_items[menu_type] = items_data
+
+    return all_menu_items
+
 def dump_data(menus, filename):
     try:
         with open(filename, 'wb') as file:
