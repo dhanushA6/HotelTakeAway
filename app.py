@@ -104,10 +104,8 @@ def admin_add():
 
         if wp.add_item_to_menu(name, category, price, desc, image.filename):
             if imageName != False:
-                return "SUCCESS: Item added!"
-            return "FAILED: Cannot save image!"
-        else:
-            return "FAILED: Cannot add item to menu!"
+                return render_template('item_add.html', page_name='Add Item', admin=True, add=True, itemName=name, category=category)
+        return render_template('item_add.html', page_name='Add Item', admin=True, add=False)
     else:
         return render_template('item_add.html', page_name='Add Item', admin=True)
 

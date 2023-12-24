@@ -8,6 +8,13 @@
     <form class="form-control p-3" enctype="multipart/form-data" method="POST" action="/admin/items/add">
       <p class="lead">Enter Item Details</p>
       <hr>
+      {% if add == True %}
+      <div class="mt-4">
+        <div class="alert alert-success alert-dismissible fade show">
+          <i class="bi bi-info-circle me-2"></i>{{itemName}} added to {{category}}!<button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endif %}
       <div class="mb-3">
         <label for="formFile" class="form-label">Item Image</label>
         <input class="form-control" type="file" name="image" id="formFile" accept=".jpg, .png" required>
@@ -27,21 +34,22 @@
       </div>
       <div class="mb-3">
         <label for="inputPrice" class="form-label">Item Price</label>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">₹</span>
-            <input type="number" name="price" class="form-control" id="inputPrice" required>
-          </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">₹</span>
+          <input type="number" name="price" class="form-control" id="inputPrice" required>
+        </div>
       </div>
       <div class="mb-5">
         <label for="inputDescription" class="form-label">Description</label>
-          <div class="mb-3">
-            <textarea class="form-control" name="desc" id="inputDescription" rows="3" spellcheck="false" required></textarea>
-          </div>
+        <div class="mb-3">
+          <textarea class="form-control" name="desc" id="inputDescription" rows="3" spellcheck="false"
+            required></textarea>
+        </div>
       </div>
       <hr>
       <div class="d-flex align-items-center justify-content-between">
-          <a href="/admin" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a>
-          <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i>Add Item</button>
+        <a href="/admin" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i>Add Item</button>
       </div>
     </form>
   </div>
