@@ -93,7 +93,6 @@ $('.remove-from-cart').on('click', function(e) {
         "p_img": pimg,
         "p_cat": pcat
     };
-    console.log(data);
     $this = $(this).parents('.cart-item')
     d = new Dialog('Remove from cart', 'Are you sure want to remove the <b>' + itemName + '</b> from the cart?');
     d.setButtons([{
@@ -268,3 +267,47 @@ if (window.location.pathname == '/checkout') {
         $('#checkout-form input').on('input', checkForm);
     });
 }
+
+// Remove item from menu
+$('.btn-remove-menu-item').on('click', function() {
+    itemName = $(this).parents('.item-action').prev().prev().html();
+    item_name = $(this).data('name');
+    item_category = $(this).data('category');
+
+    var data = {
+        "name": item_name,
+        "category": item_category
+    };
+    $this = $(this).parents('.menu-item')
+    console.log($this);
+    d = new Dialog('Remove Item from Menu', 'Are you sure want to remove the <b>' + itemName + '</b> from the menu?');
+    d.setButtons([{
+        'name': "Cancel",
+        "class": "btn-secondary",
+        "onClick": function (event) {
+            $(event.data.modal).modal('hide');
+        }
+    },
+    {
+        'name': "Remove",
+        "class": "btn-danger",
+        "onClick": function (event) {
+            $.ajax({
+                url: "/api/menu/remove",
+                type: "POST",
+                contentType: "application/json", // Set the Content-Type header
+                data: JSON.stringify(data),
+                success: function () {
+                    $this.remove();
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+
+            $(event.data.modal).modal('hide')
+        }
+    }
+    ]);
+    d.show();
+});

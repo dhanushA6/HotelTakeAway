@@ -185,6 +185,15 @@ def cart_empty():
     else:
         return redirect(url_for('index'))
 
+@app.route('/api/menu/remove', methods=['POST'])
+def remove_item_from_menu():
+    if request.method == 'POST':
+        data = request.get_json()
+        name = data['name']
+        category = data['category']
+        result = wp.remove_item_from_menu(name, category)
+        return jsonify({'result': result})
+
 
 ################ Helper Functions ################
 def chk_sess_var(variables: list):

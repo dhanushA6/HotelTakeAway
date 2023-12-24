@@ -6,8 +6,8 @@
         <p class="mb-4 fw-light">Remove items from the menu with specific categories.</p>
     </div>
     <div>
-        {% for ct in ['Breakfast', 'Lunch', 'Snacks', 'Dinner', 'Drinks', 'Desserts'] %}
-        <h3 class="fw-normal fs-4">Category - {{ct}}</h3>
+        {% for ct in ['Breakfast', 'Lunch', 'Snacks', 'Dinner'] %}
+        <h3 class="fw-normal fs-4">{{ct}}</h3>
         <hr class="mb-3">
         <ul class="list-group list-group-flush">
             {% for i, j in items.items() %}
@@ -24,15 +24,13 @@
                         </thead>
                         <tbody>
                             {% for item in j %}
-                            <tr>
-                                <td colspan="2">
-                                    <label>{{item[0]}}</label>
-                                </td>
-                                <td class="text-center" colspan="2">
+                            <tr class="menu-item fade show">
+                                <td class="item-name" colspan="2">{{item[0]}}</td>
+                                <td class="item-price text-center" colspan="2">
                                     <span class="badge text-bg-secondary">₹{{item[1]}}</span>
                                 </td>
-                                <td class="text-center" colspan="2">
-                                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                <td class="item-action text-center" colspan="2">
+                                    <button class="btn btn-sm btn-danger btn-remove-menu-item"  data-name="{{item[0]}}" data-category="{{i|lower}}"><i class="bi bi-trash"></i></button>
                                 </td>
                             </tr>
                             {% endfor %}
