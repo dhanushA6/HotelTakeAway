@@ -1,20 +1,23 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_mail import Mail, Message
+from dotenv import load_dotenv
 import wrapper as wp
+load_dotenv()
+import os
 
 app = Flask(__name__)
 mail = Mail(app)
 
 # configuration of mail 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'xxx@gmail.com'
-app.config['MAIL_PASSWORD'] = 'xxx'
+app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
+app.config['MAIL_PORT'] = os.getenv("MAIL_PORT")
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
-app.secret_key = "hfc"
+app.secret_key = os.getenv("APP_SECRET_KEY")
 
 @app.route('/')
 def index():
