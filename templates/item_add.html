@@ -1,10 +1,11 @@
 {% extends 'base.html' %} {% block body %}
-<div class="container my-5">
+<div class="container my-5 p-3">
   <div class="p-3">
     <h3 class="fw-normal fs-4"><i class="bi bi-plus-circle me-2"></i>Add Item</h3>
     <hr>
+    <p class="mb-4 fw-light">Enter dish details - name, description, price, and category - to add a new item to the menu.</p>
   </div>
-  <div class="p-3">
+  <div class="menu-add-form p-3">
     <form class="form-control p-3" enctype="multipart/form-data" method="POST" action="/admin/items/add">
       <p class="lead">Enter Item Details</p>
       <hr>
