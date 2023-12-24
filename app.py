@@ -21,6 +21,7 @@ mail = Mail(app)
 
 app.secret_key = os.getenv("APP_SECRET_KEY")
 
+################ App Routes ################
 @app.route('/')
 def index():
     return render_template('index.html', page_name="Home")
@@ -85,6 +86,28 @@ def bill():
 def about():
     return render_template('about.html', page_name="About")
 
+################ Admin routes ################
+@app.route('/admin')
+def admin():
+    return render_template('admin.html', page_name='Admin Panel', admin=True)
+
+@app.route('/admin/items/add')
+def admin_add():
+    return render_template('item_add.html', page_name='Add Item', admin=True)
+
+@app.route('/admin/items/remove')
+def admin_remove():
+    return render_template('item_remove.html', page_name='Remove Item', admin=True)
+
+@app.route('/admin/items/update')
+def admin_update():
+    return render_template('item_update.html', page_name='Update Item', admin=True)
+
+@app.route('/admin/orders/show')
+def admin_show_order():
+    return render_template('show_orders.html', page_name='Show Orders', admin=True)
+
+################ API Routes ################
 @app.route('/api/cart/add', methods=['POST'])
 def add_to_cart():
     if request.method == 'POST':
@@ -144,6 +167,8 @@ def cart_empty():
     else:
         return redirect(url_for('index'))
 
+
+################ Helper Functions ################
 def chk_sess_var(variables: list):
     missing_variables = [var for var in variables if var not in session]
 

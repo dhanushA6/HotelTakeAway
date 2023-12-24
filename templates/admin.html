@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container my-5">
+    <div class="row flex-lg-row-reverse align-items-center bg-body-tertiary my-5 p-5 g-3 rounded-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="{{ url_for('static', filename='cover.svg') }}" class="d-block mx-lg-auto img-fluid" alt="" width="500" height="400" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+            <h4 class="display-5 mb-3">Welcome, Chief!</h4>
+            <p class="fs-4"><label class="ms-5"></label>Your control hub for elevating the takeaway experience at our hotel. Manage orders, delight customers, and craft seamless service through our intuitive web app. Let's make every takeout extraordinary together!</p>
+        </div>
+    </div>
+    <div class="p-3">
+        <h3 class="fw-normal fs-4">Admin Control</h3>
+        <hr class="mb-4">
+    </div>
+    <div class="row justify-content-center px-4">
+        {% for i in ['Add Item', 'Remove Item', 'Update Item', 'Show Orders'] %}
+        <div class="col-lg-6 mb-3">
+            <div class="card btn bg-body-tertiary h-100 border shadow">
+                <div class="card-body px-4">
+                    <div class="text-center">
+                        <h5 class="fw-normal">
+                            <i class="bi {% if i == 'Add Item' %} bi-plus-circle {% elif i == 'Remove Item' %} bi-dash-circle {% elif i == 'Update Item' %} bi-arrow-repeat {% elif i == 'Show Orders' %} bi-list-task {% endif %}"></i>
+                            {{i}}
+                        </h5>
+                    </div>
+                    {% set word = i.split(' ')[0] %}
+                    {% if i == 'Show Orders' %}
+                    <a href="/admin/orders/{{word|lower}}" class="stretched-link"></a>
+                    {% else %}
+                    <a href="/admin/items/{{word|lower}}" class="stretched-link"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <img src="{{ url_for('static', filename='eazycart-logo.svg') }}" width="30" height="24">
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 HFC   , Inc</span>
+        </div>
+    </footer>
+</div>
+
+
+{% endblock %}
