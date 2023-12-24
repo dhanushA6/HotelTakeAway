@@ -3,7 +3,7 @@
     <div>
         <h3 class="fw-normal fs-4"><i class="bi bi-trash me-2"></i>Remove Item</h3>
         <hr>
-        <p class="mb-4">Remove item from menu with specific categories</p>
+        <p class="mb-4 fw-light">Remove items from the menu with specific categories.</p>
     </div>
     <div>
         {% for ct in ['Breakfast', 'Lunch', 'Snacks', 'Dinner', 'Drinks', 'Desserts'] %}
@@ -18,8 +18,8 @@
                         <thead>
                             <tr>
                                 <th colspan="2" scope="col">Items</th>
-                                <th colspan="2" scope="col">Price</th>
-                                <th colspan="2" scope="col">Action</th>
+                                <th class="text-center" colspan="2" scope="col">Price</th>
+                                <th class="text-center" colspan="2" scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,8 +28,10 @@
                                 <td colspan="2">
                                     <label>{{item[0]}}</label>
                                 </td>
-                                <td colspan="2">₹{{item[1]}}</td>
-                                <td colspan="2">
+                                <td class="text-center" colspan="2">
+                                    <span class="badge text-bg-secondary">₹{{item[1]}}</span>
+                                </td>
+                                <td class="text-center" colspan="2">
                                     <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                                 </td>
                             </tr>
