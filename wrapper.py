@@ -1,6 +1,6 @@
 from model.menu_manage import MenuManager
 from model.order_manage import *
-from model.cart import SingletonMeta, Cart
+from model.cart import  Cart
 from model.orders import Orders
 import pickle, os
 import random
