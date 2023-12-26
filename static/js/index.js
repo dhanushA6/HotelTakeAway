@@ -139,9 +139,10 @@ function updateOrderSummary() {
         sum += prices[i];
     }
 
-    shipping_cost = parseInt($('.cart-shipping-cost').text());
+    gst_cost = parseInt($('.cart-gst-total').text());
     $('.cart-subtotal').text(sum);
-    $('.cart-total').text(sum + shipping_cost);
+    $('.cart-gst-total').text(Math.round(parseInt(sum) * 0.05));
+    $('.cart-total').text(parseInt(sum) + gst_cost);
 }
 
 // Update cart quantity
@@ -149,7 +150,6 @@ $('.btn-update-cart').on('click', function(e) {
     e.preventDefault();
     var $this = $(this);
     var data = [];
-
 
     $('.cart-item').each(function() {
         pname = $(this).data('pname');
@@ -167,6 +167,10 @@ $('.btn-update-cart').on('click', function(e) {
             "qty": parseInt(quantity)
         });
     });
+
+    if (data.length == 0) {
+        location.reload();
+    }
 
     var oldHtml = $this.html();
     var spinner = `<div class="spinner-border spinner-border-sm text-body me-2" role="status"></div>`
@@ -265,6 +269,11 @@ if (window.location.pathname == '/checkout') {
 
         // Call the checkForm function whenever a form field changes
         $('#checkout-form input').on('input', checkForm);
+
+        $('.btn-review-order').on('click', function() {
+            $(this).addClass('disabled');
+            $(this).html('<div class="spinner-border spinner-border-sm text-body me-1" role="status"></div> Placing order');
+        });
     });
 }
 
@@ -347,7 +356,7 @@ $('.btn-remove-order').on('click', function(e) {
                 var success = modal_footer.find('.btn-success');
 
                 success.addClass('disabled');
-                success.html('<div class="spinner-border spinner-border-sm text-body me-2" role="status"></div> Delivering..');
+                success.html('<div class="spinner-border spinner-border-sm text-body me-1" role="status"></div> Delivering');
 
                 $.ajax({
                     url: "/api/order/remove",
