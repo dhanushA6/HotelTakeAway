@@ -436,15 +436,16 @@ def show_orders_data():
     print("Orderst List data fetched successfully")
     return show_orders_data
 
-def remove_order(key_to_remove: int):
-
-    if key_to_remove in show_orders_data():
-        del show_orders_data()[key_to_remove]
-        print(f"Entry with key {key_to_remove} removed successfully.")
+def remove_order_data(key_to_remove: int):
+    data = show_orders_data()
+    if key_to_remove in data:
+        del data[key_to_remove]
+        print(f"Order with key {key_to_remove} is Removed")
         return True
-    else:
-        print(f"Key {key_to_remove} not found in the dictionary.") 
-        return False
+    print(f"Key {key_to_remove} is not valid ")
+    return False
+ 
+
     
 
 

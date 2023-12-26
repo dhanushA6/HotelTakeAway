@@ -19,14 +19,19 @@ import pickle
 # for order in wp.get_orders_list():
 #     wp.add_subscriber(order.customer)
 
-try:
-        with open("subscribers.pkl", 'rb') as file:
-            obj = pickle.load(file)
-            file.close()
-except:
-        #using Observer Pattern here
-        obj = MenuObservable()
+# try:
+#         with open("subscribers.pkl", 'rb') as file:
+#             obj = pickle.load(file)
+#             file.close()
+# except:
+#         #using Observer Pattern here
+#         obj = MenuObservable()
 
-obj.notify_observers("Biriyani")
+# obj.notify_observers("Biriyani")
+
+data = wp.show_orders_data()
+wp.remove_order_data(1000)
+
+# print(data)
 
 
