@@ -25,7 +25,8 @@ app.secret_key = os.getenv("APP_SECRET_KEY")
 ################ App Routes ################
 @app.route('/')
 def index():
-    return render_template('index.html', page_name="Home")
+    motd = wp.get_todaymenu()
+    return render_template('index.html', page_name="Home", motd=motd)
 
 @app.route('/category/<name>', methods=['GET', 'POST'])
 def category(name):
@@ -77,7 +78,7 @@ def bill():
         wp.do_payment(session['u_payment'], new_order)
         wp.push_orders(new_order)
         
-        send_email(sess_values, token, total_summary, cart_items, order_dt)
+        send_invoice_email(sess_values, token, total_summary, cart_items, order_dt)
         
         return render_template('bill.html', page_name="Bill", token=token, total=total_summary, items=cart_items, user=sess_values, order_dt=order_dt)
     else:
@@ -215,8 +216,31 @@ def remove_item_from_menu():
 def remove_order():
     if request.method == 'POST':
         data = request.get_json()
+        name = data['name']
+        email = data['email']
         order_id = data['order_id']
+        token_id = data['order_id']
         result = wp.remove_order_data(order_id)
+        
+        if result and send_deliver_email(name, email, token_id):
+            return jsonify({'result': result})
+        else:
+            return jsonify({'result': False})
+        
+@app.route('/api/motd/toggle', methods=['POST'])
+def motd_toggle():
+    if request.method == 'POST':
+        data = request.get_json()
+        name = data['name']
+        desc = data['desc']
+        price = data['price']
+        image = data['image']
+        avail = data['avail']
+        category = data['category']
+        
+        # Add to motd
+        obj = wp.create_item(name, price, desc, image, category, avail)
+        result = wp.add_item_to_todayMenu(obj, category)
         
         if result:
             return jsonify({'result': result})
@@ -232,7 +256,7 @@ def chk_sess_var(variables: list):
     else:
         return False
     
-def send_email(user, token, total, cart_items, order_dt):
+def send_invoice_email(user, token, total, cart_items, order_dt):
     
     body = f"Invoice #{token} for Your Recent Orders via HFC"
     msg = Message( 
@@ -240,7 +264,21 @@ def send_email(user, token, total, cart_items, order_dt):
                     sender ='noreply@gmail.com',
                     recipients = [f'{user[2]}'] 
                 ) 
-    view = render_template('mail.html', user=user, token=token, total=total, items=cart_items, order_dt=order_dt)
+    view = render_template('mail_invoice.html', user=user, token=token, total=total, items=cart_items, order_dt=order_dt)
+    msg.html = view
+    if mail.send(msg):
+        return True
+    return False
+
+def send_deliver_email(user, email, token):
+    
+    body = f"Your HFC Takeaway Order Has Been Delivered!"
+    msg = Message( 
+                    body,
+                    sender ='noreply@gmail.com',
+                    recipients = [f'{email}'] 
+                ) 
+    view = render_template('mail_deliver.html', user=user, token=token)
     msg.html = view
     if mail.send(msg):
         return True
