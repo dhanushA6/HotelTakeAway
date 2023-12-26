@@ -6,6 +6,7 @@ import pickle, os
 import random
 from datetime import datetime
 from model.customer import Customer, MenuObservable
+from model.menu_of_the_day import MenuBuilder
 # Path Constants
 CONFIG_PATH = os.path.dirname(os.path.realpath(__file__))
 APP_PATH = os.path.abspath(os.path.join(CONFIG_PATH, '..'))
@@ -15,19 +16,19 @@ pickle_name = CONFIG_PATH + "\\menu.pickle"
 def add_subscriber(cust):
     try:
         with open("subscribers.pkl", 'rb') as file:
-            subscribers = pickle.load(file)
+            obj = pickle.load(file)
             file.close()
     except:
         #using Observer Pattern here
         obj = MenuObservable()
-        subscribers = obj.observers
+        
 
-    if cust.email not in subscribers:
-        subscribers[cust.email] = cust.name
+    if cust.email not in obj.observers:
+        obj.add_observer(cust)
         print("Subscriber added Successfully....")
 
     with open("subscribers.pkl", 'wb') as file :
-        pickle.dump(subscribers, file)
+        pickle.dump(obj, file)
         file.close()
  
        
@@ -416,7 +417,7 @@ def show_orders_data():
     order_list = get_orders_list()
     show_orders_data = {}
     key = 100
-    for order in order_list[:3]:
+    for order in order_list:
         order_data = []
         order_data.append(order.token)
         items_data = {}
@@ -448,7 +449,7 @@ def action(key_to_remove):
 
 
 
-# ------------------- Observer Pattern------------------
+# ------------------- Observer Pattern------------------------------------------
 def get_subscribers_data():
     try:
         with open("subscribers.pkl", 'rb') as file:
@@ -458,7 +459,42 @@ def get_subscribers_data():
         subscribers = []
     return subscribers
 
-#----------------------------------------------------------- 
+#--------------------------------------Menu of the day -------------------------------
+def add_item_to_todayMenu(item_add, menu_type):
+    builder = MenuBuilder()
+    try:
+        builder.load_from_pickle('todaymenu.pickle')
+    except Exception:
+        print("File not Found")
+
+    menu_type_name = menu_type.capitalize()
+    builder.add_to_menu(menu_type_name, item_add)
+    builder.save_to_pickle('todaymenu.pickle')
+    print("Item Added to the Today Menu SuccessFully..")
+    return True
+
+def get_todaymenu(menu_type):
+    new_builder = MenuBuilder()
+    try:
+        new_builder.load_from_pickle('todaymenu.pickle')
+    except Exception:
+        print("File not Found")
+    if menu_type.capitalize() in ["Breakfast", "Lunch", "Snacks","TodayMenu", "Dinner"]:
+        menu = new_builder.get_menu_items(menu_type)
+        print(f"Menu Items of {menu_type} is Retrieved Successfully.. ")
+    else:
+        print("Invalid Menu Type")
+    return menu
+
+#------------------------------------------- end of the Menu of the day------ ----------
+
+
+
+
+    
+
+
+
 
 
 
