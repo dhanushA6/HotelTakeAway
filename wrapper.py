@@ -204,7 +204,24 @@ def create_order(cust_obj):
     return new_order
 
 def create_token():
-    return len(get_orders_list()) + 1
+    try:
+        with open("tokens.pickle", 'rb') as file:
+           tokens =  pickle.load(file)
+           file.close()
+    except Exception:
+        tokens = []
+    token = len(get_orders_list()) + 1
+    if token in tokens:
+        token += 1
+        tokens.append(token)
+    else:
+        tokens.append(token)
+
+    with open ("tokens.pickle", 'wb') as file:
+        pickle.dump(tokens, file)
+        file.close()
+    
+    return token
 
 def assign_token_and_datetime(new_order):
     generated_token = create_token()
@@ -440,6 +457,14 @@ def remove_order_data(key_to_remove: int):
     data = show_orders_data()
     if key_to_remove in data:
         token = data[key_to_remove][0]
+        try:
+            with open("tokens.pickle", 'rb') as file:
+                tokens =  pickle.load(file)
+                file.close()
+        except Exception:
+            tokens = []  
+        tokens.remove(token)
+
         del data[key_to_remove]
         print(f"Order with key {key_to_remove} is Removed")
         orders_list = get_orders_list()
