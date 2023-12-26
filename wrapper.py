@@ -204,7 +204,7 @@ def create_order(cust_obj):
     return new_order
 
 def create_token():
-    return random.randint(100, 999)
+    return len(get_orders_list()) + 1
 
 def assign_token_and_datetime(new_order):
     generated_token = create_token()
@@ -416,7 +416,7 @@ def remove_item_from_menu(itemName: str, category: str):
 def show_orders_data():
     order_list = get_orders_list()
     show_orders_data = {}
-    key = 100
+    key = 1000
     for order in order_list:
         order_data = []
         order_data.append(order.token)
