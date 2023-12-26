@@ -74,11 +74,11 @@
                             </tr>
                             <tr>
                                 <th class="py-4">GST</th>
-                                <td class="py-4 text-end text-muted">₹10.00</td>
+                                <td class="py-4 text-end text-muted">₹{{(cart_total * 0.05)|round(1)}}</td>
                             </tr>
                             <tr>
                                 <th class="pt-4 border-0">Total</th>
-                                <td class="pt-4 border-0 text-end h3 fw-normal text-nowrap">₹<label class="cart-total">{{cart_total + 10}}</label></td>
+                                <td class="pt-4 border-0 text-end h3 fw-normal text-nowrap">₹<label class="cart-total">{{cart_total + (cart_total * 0.05)|round(1)}}</label></td>
                             </tr>
                         </tbody>
                     </table>

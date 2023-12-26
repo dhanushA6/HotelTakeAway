@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Invoice for {user[0]}</title>
     <style>
@@ -7,22 +8,24 @@
             width: 100%;
             border-collapse: collapse;
         }
-
-        th, td {
+        
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
-
+        
         th {
             background-color: #f2f2f2;
         }
-
+        
         .totals {
             text-align: right;
         }
     </style>
 </head>
+
 <body>
     <h4>Dear {{user[0]}},</h4>
     <p>We hope this message finds you well and enjoying your recent orders with us. Thank you for choosing HFC!</p>
@@ -51,15 +54,18 @@
         <tfoot>
             <tr>
                 <td colspan="3" class="totals">Subtotal</td>
-                <td class="totals">₹{{total}}</td> <!-- Total of each item -->
+                <td class="totals">₹{{total}}</td>
+                <!-- Total of each item -->
             </tr>
             <tr>
                 <td colspan="3" class="totals">GST</td>
-                <td class="totals">₹10</td> <!-- GST value -->
+                <td class="totals">₹{{(total * 0.05)|round(1)}}</td>
+                <!-- GST value -->
             </tr>
             <tr>
                 <td colspan="3" class="totals">Grand Total</td>
-                <td class="totals">₹{{total|int + 10}}</td> <!-- Grand total -->
+                <td class="totals">₹{{total|int + (total * 0.05)|round(1)}}</td>
+                <!-- Grand total -->
             </tr>
         </tfoot>
     </table>
@@ -70,4 +76,5 @@
     <p>HFC Takeaway</p>
     <p>mail@hfchotel.co</p>
 </body>
+
 </html>

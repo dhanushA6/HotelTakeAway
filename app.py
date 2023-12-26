@@ -220,7 +220,7 @@ def remove_order():
         name = data['name']
         email = data['email']
         order_id = data['order_id']
-        token_id = data['order_id']
+        token_id = data['token_id']
         result = wp.remove_order_data(order_id)
         
         if result and send_deliver_email(name, email, token_id):
