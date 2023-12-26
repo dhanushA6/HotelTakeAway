@@ -5,6 +5,8 @@ import pickle
 from model.menu_of_the_day import MenuBuilder
 
 print(wp.get_todaymenu())
+for item in wp.get_todaymenu()["Lunch"]:
+    print(item.category)
 # Adding items to different menus
 # print(wp.get_menu_items("Breakfast"))
 # #---------------------------------------------------
