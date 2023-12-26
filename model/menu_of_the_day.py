@@ -25,17 +25,18 @@ class MenuBuilder:
             self.menus[menu_type].add_item(item)
         else:
             print(f"Menu type '{menu_type}' not found.")
-            
+
     def remove_menu(self, item_remove):
         cateogry = item_remove.category.capitalize()
         menus = self.menus[cateogry].get_items()
         for item in menus:
-            if item.name.lower() == item_remove.lower():
+            if item.name.lower() == item_remove.name.lower():
                 menus.remove(item)
                 self.menus[cateogry].items = menus
                 self.save_to_pickle("menus.pickle")
+                print("Item Removed Succesfully")
                 return True
-                break
+                
         return False
         
         
