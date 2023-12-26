@@ -488,20 +488,20 @@ def add_item_to_todayMenu(item_add, menu_type):
     return True
 
 def get_todaymenu():
-    menu_types = ["Breakfast", "Lunch", "Snacks", "TodayMenu", "Dinner"]
-    menus = []
+    menu_types = ["Breakfast", "Lunch", "Snacks", "Dinner"]
+    menus = {}
     for menu_type in menu_types:
         new_builder = MenuBuilder()
         try:
             new_builder.load_from_pickle('todaymenu.pickle')
         except Exception:
             print("File not Found")
-        if menu_type.capitalize() in ["Breakfast", "Lunch", "Snacks","TodayMenu", "Dinner"]:
+        if menu_type.capitalize() in ["Breakfast", "Lunch", "Snacks", "Dinner"]:
             menu = new_builder.get_menu_items(menu_type)
             print(f"Menu Items of {menu_type} is Retrieved Successfully.. ")
         else:
             print("Invalid Menu Type")
-        menus.append(menu)
+        menus[menu_type] = menu
     return menus
 
 #------------------------------------------- end of the Menu of the day------ ----------
