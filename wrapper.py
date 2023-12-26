@@ -5,28 +5,31 @@ from model.orders import Orders
 import pickle, os
 import random
 from datetime import datetime
-from model.customer import Customer
+from model.customer import Customer, MenuObservable
 # Path Constants
 CONFIG_PATH = os.path.dirname(os.path.realpath(__file__))
 APP_PATH = os.path.abspath(os.path.join(CONFIG_PATH, '..'))
 pickle_name = CONFIG_PATH + "\\menu.pickle"
 
 
-def add_subscriber(email):
+def add_subscriber(cust):
     try:
         with open("subscribers.pkl", 'rb') as file:
             subscribers = pickle.load(file)
             file.close()
     except:
-        subscribers = []
+        #using Observer Pattern here
+        obj = MenuObservable()
+        subscribers = obj.observers
 
-    if email not in subscribers:
-        subscribers.append(email)
+    if cust.email not in subscribers:
+        subscribers[cust.email] = cust.name
         print("Subscriber added Successfully....")
 
     with open("subscribers.pkl", 'wb') as file :
         pickle.dump(subscribers, file)
         file.close()
+ 
        
 
 
@@ -195,7 +198,7 @@ def push_orders(order):
 def create_order(cust_obj):
     cart_obj = load_cart()
     cart_dict = cart_obj.get_cart_items()
-    add_subscriber(cust_obj.email)
+    add_subscriber(cust_obj)
     new_order = OrderFactory.create_order(cart_dict, cust_obj)
     return new_order
 
@@ -443,7 +446,10 @@ def action(key_to_remove):
         return False
     
 
-def get_subscriber():
+
+
+# ------------------- Observer Pattern------------------
+def get_subscribers_data():
     try:
         with open("subscribers.pkl", 'rb') as file:
             subscribers = pickle.load(file)
@@ -451,3 +457,8 @@ def get_subscriber():
     except:
         subscribers = []
     return subscribers
+
+#----------------------------------------------------------- 
+
+
+
