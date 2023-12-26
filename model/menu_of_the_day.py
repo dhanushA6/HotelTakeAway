@@ -1,5 +1,13 @@
 import pickle
-import wrapper as wp
+
+class SingletonMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
 class Menu:
     def __init__(self):
         self.items = []
@@ -10,7 +18,7 @@ class Menu:
     def get_items(self):
         return self.items
 
-class MenuBuilder:
+class MenuBuilder(metaclass=SingletonMeta):
     def __init__(self):
         self.menus = {
             'Breakfast': Menu(),
@@ -27,19 +35,15 @@ class MenuBuilder:
             print(f"Menu type '{menu_type}' not found.")
 
     def remove_menu(self, item_remove):
-        cateogry = item_remove.category.capitalize()
-        menus = self.menus[cateogry].get_items()
+        category = item_remove.category.capitalize()
+        menus = self.menus[category].get_items()
         for item in menus:
             if item.name.lower() == item_remove.name.lower():
                 menus.remove(item)
-                self.menus[cateogry].items = menus
-                self.save_to_pickle("menus.pickle")
-                print("Item Removed Succesfully")
-                return True
-                
+                self.menus[category].items = menus
+                print("Item Removed Successfully")
+                break
         return False
-        
-        
 
     def get_menu_items(self, menu_type):
         if menu_type in self.menus:
@@ -48,11 +52,4 @@ class MenuBuilder:
             print(f"Menu type '{menu_type}' not found.")
             return []
 
-    def save_to_pickle(self, filename):
-        with open(filename, 'wb') as file:
-            pickle.dump(self.menus, file)
-
-    def load_from_pickle(self, filename):
-        with open(filename, 'rb') as file:
-            self.menus = pickle.load(file)
 

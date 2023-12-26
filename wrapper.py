@@ -501,34 +501,53 @@ def get_subscribers_data():
 
 #--------------------------------------Menu of the day -------------------------------
 def add_item_to_todayMenu(item_add, menu_type):
-    builder = MenuBuilder()
+    
     try:
-        builder.load_from_pickle('todaymenu.pickle')
+        with open("todaymenu.pickle", 'rb') as file:
+            builder = pickle.load(file)
     except Exception:
-        print("File not Found")
+            builder = MenuBuilder()
 
     menu_type_name = menu_type.capitalize()
     builder.add_to_menu(menu_type_name, item_add)
-    builder.save_to_pickle('todaymenu.pickle')
+    try:
+        with open("todaymenu.pickle", 'wb') as file:
+            builder = pickle.dump(builder, file)
+    except Exception:
+            print("Exception Occured")
     print("Item Added to the Today Menu SuccessFully..")
     return True
 
 def get_todaymenu():
     menu_types = ["Breakfast", "Lunch", "Snacks", "Dinner"]
     menus = {}
+    try:
+        with open("todaymenu.pickle", 'rb') as file:
+            builder = pickle.load(file)
+    except Exception:
+            builder = MenuBuilder()
+
     for menu_type in menu_types:
-        new_builder = MenuBuilder()
-        try:
-            new_builder.load_from_pickle('todaymenu.pickle')
-        except Exception:
-            print("File not Found")
         if menu_type.capitalize() in ["Breakfast", "Lunch", "Snacks", "Dinner"]:
-            menu = new_builder.get_menu_items(menu_type)
+            menu = builder.get_menu_items(menu_type)
             print(f"Menu Items of {menu_type} is Retrieved Successfully.. ")
         else:
             print("Invalid Menu Type")
         menus[menu_type] = menu
     return menus
+
+def remove_menu(item_remove):
+        try:
+            with open("todaymenu.pickle", 'rb') as file:
+                builder = pickle.load(file)
+        except Exception:
+                builder = MenuBuilder()
+        builder.remove_menu(item_remove)
+        try:
+            with open("todaymenu.pickle", 'wb') as file:
+                builder = pickle.dump(builder, file)
+        except Exception:
+                print("Exception Occured")
 
 #------------------------------------------- end of the Menu of the day------ ----------
 
