@@ -6,13 +6,13 @@
         </div>
         <div class="col-lg-6">
             <h4 class="display-5 mb-3">Hey Foodie!</h4>
-            <p class="fs-4"><label class="ms-5"></label>Indulge in the extraordinary from the comfort of your home with HFC Takeaway Web App. Elevate your dining experience with a seamless blend of exquisite flavors and convenience. Our digital oasis invites you to savor
-                the essence of luxury dining, effortlessly delivered to your doorstep.</p>
+            <p class="fs-4"><label class="ms-5"></label>Indulge in the extraordinary from the comfort of your home with HFC Takeaway. Elevate your dining experience with a seamless blend of exquisite flavors and convenience. Our digital oasis invites you to savor the
+                essence of luxury dining, effortlessly delivered.</p>
         </div>
     </div>
     <h3 class="fw-normal fs-3">Categories</h3>
     <hr class="mb-4">
-    <div class="row justify-content-center px-5 mb-3">
+    <div class="row justify-content-center mb-3">
         {% for i in ['Breakfast', 'Lunch', 'Snacks', 'Dinner'] %}
         <div class="col-lg-6 mb-3">
             <div class="card custom-card bg-body-tertiary h-100 border shadow">
@@ -31,7 +31,7 @@
 
     <div>
         {% for i, j in motd.items() %}
-        <h3 class="fw-normal fs-4">
+        <h3 class="fw-normal fs-4 mt-3">
             {{i}}
         </h3>
         <hr class="mb-3"> {% if j|length == 0 %}
@@ -48,9 +48,6 @@
                             <p class="fw-semibold">Price: ₹{{item.price}}</p>
                             <label class="text-start">{{item.description}}</label>
                         </div>
-                    </div>
-                    <div class="card-footer border-0 bg-transparent px-3 pb-4">
-                        <p class="text-start mt-2">Category: <label class="fw-semibold">{{item.category|capitalize}}</label></p>
                     </div>
                 </div>
             </div>
