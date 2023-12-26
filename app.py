@@ -124,13 +124,13 @@ def admin_update():
 @app.route('/admin/orders')
 def admin_show_orders():
     data = wp.show_orders_data()
-    return render_template('show_orders.html', page_name='Show Orders', admin=True, data=data)
+    return render_template('orders.html', page_name='Show Orders', admin=True, data=data)
 
 @app.route('/admin/orders/show/<order>')
 def admin_show_orders_detail(order):
     order_id = order
     data = wp.show_orders_data()
-    return render_template('show_orders.html', page_name='Show Orders', admin=True, data=data)
+    return render_template('show_order.html', page_name='Show Orders', admin=True, data=data, order_id=order_id)
 
 @app.route('/admin/manage/menu-of-the-day')
 def admin_manage_menu_of_the_day():
