@@ -436,10 +436,10 @@ def show_orders_data():
     print("Orderst List data fetched successfully")
     return show_orders_data
 
-def action(key_to_remove):
+def remove_order(key_to_remove: int):
 
-    if key_to_remove in show_orders_data:
-        del show_orders_data[key_to_remove]
+    if key_to_remove in show_orders_data():
+        del show_orders_data()[key_to_remove]
         print(f"Entry with key {key_to_remove} removed successfully.")
         return True
     else:
