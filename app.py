@@ -211,6 +211,18 @@ def remove_item_from_menu():
         else:
             return jsonify({'result': False})
 
+@app.route('/api/order/remove', methods=['POST'])
+def remove_order():
+    if request.method == 'POST':
+        data = request.get_json()
+        order_id = data['order_id']
+        result = wp.remove_order_data(order_id)
+        
+        if result:
+            return jsonify({'result': result})
+        else:
+            return jsonify({'result': False})
+
 ################ Helper Functions ################
 def chk_sess_var(variables: list):
     missing_variables = [var for var in variables if var not in session]

@@ -284,32 +284,82 @@ $('.btn-remove-menu-item').on('click', function() {
     console.log($this);
     d = new Dialog('Remove Item from Menu', 'Are you sure want to remove the <b>' + itemName + '</b> from the menu?');
     d.setButtons([{
-        'name': "Cancel",
-        "class": "btn-secondary",
-        "onClick": function (event) {
-            $(event.data.modal).modal('hide');
-        }
-    },
-    {
-        'name': "Remove",
-        "class": "btn-danger",
-        "onClick": function (event) {
-            $.ajax({
-                url: "/api/menu/remove",
-                type: "POST",
-                contentType: "application/json", // Set the Content-Type header
-                data: JSON.stringify(data),
-                success: function () {
-                    $this.remove();
-                },
-                error: function (error) {
-                    console.error(error);
-                }
-            });
+            'name': "Cancel",
+            "class": "btn-secondary",
+            "onClick": function(event) {
+                $(event.data.modal).modal('hide');
+            }
+        },
+        {
+            'name': "Remove",
+            "class": "btn-danger",
+            "onClick": function(event) {
+                $.ajax({
+                    url: "/api/menu/remove",
+                    type: "POST",
+                    contentType: "application/json", // Set the Content-Type header
+                    data: JSON.stringify(data),
+                    success: function() {
+                        $this.remove();
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
 
-            $(event.data.modal).modal('hide')
+                $(event.data.modal).modal('hide')
+            }
         }
+    ]);
+    d.show();
+});
+
+$('.btn-remove-order').on('click', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var p1 = $this.parents('.user-order');
+    var order_id = $this.data('id');
+    var token_id = $this.data('token');
+    var is_show = $this.data('show');
+
+    data = {
+        "order_id": parseInt(order_id),
+        "token_id": parseInt(token_id)
     }
+
+    d = new Dialog('Confirm deliver', 'Are you sure want to deliver <b>#' + token_id + '</b>?');
+    d.setButtons([{
+            'name': "Cancel",
+            "class": "btn-secondary",
+            "onClick": function(event) {
+                $(event.data.modal).modal('hide');
+            }
+        },
+        {
+            'name': "Deliver",
+            "class": "btn-success",
+            "onClick": function(event) {
+                $.ajax({
+                    url: "/api/order/remove",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function() {
+                        console.log("removed order!");
+                        if (is_show == true) {
+                            window.location.pathname = "/admin/orders"
+                        } else {
+                            p1.remove();
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+
+                $(event.data.modal).modal('hide')
+            }
+        }
     ]);
     d.show();
 });

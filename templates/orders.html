@@ -8,49 +8,44 @@
     {% if data|length == 0 %}
     <p class="text-danger p-3">No orders found!</p>
     {% else %}
-    <table class="table table-hover">
-        <thead>
-            <tr class="text-center">
-                <th scope="col"># Token</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Time</th>
-                <!-- Delivered tick -->
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            {% for token, order in data.items() %}
-            <tr class="text-center">
-                <th scope="row"># {{token}}</th>
-                <td>{{order[2]}}</td>
-                <td>{{order[3]}}</td>
-                <td>{{order[4]}}</td>
-                <td>
-                    {% if order[5] == 'normal' %}
-                    <span class="badge rounded-pill text-bg-warning">Low</span> {% else %}
-                    <span class="badge rounded-pill text-bg-danger">High</span> {% endif %}
-                </td>
-                <td>{{order[6]}}</td>
-                <td>
-                    <a role="button" class="btn btn-sm btn-success btn-remove-order" data-id="{{token}}"><i class="bi bi-check2"></i></a>
-                    <a href="/admin/orders/show/{{token}}" role="button" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                <img src="{{ url_for('static', filename='eazycart-logo.svg') }}" width="30" height="24">
-            </a>
-            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 HFC   , Inc</span>
-        </div>
-    </footer>
+    <div class="table-responsive p-3">
+        <table class="table table-hover mb-3">
+            <thead>
+                <tr class="text-center user-order">
+                    <th class="text-nowrap" scope="col"># Token</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Time</th>
+                    <!-- Delivered tick -->
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for token, order in data.items() %}
+                <tr class="text-center user-order">
+                    <th scope="row"># {{order[0]}}</th>
+                    <td>{{order[2]}}</td>
+                    <td>{{order[3]}}</td>
+                    <td>{{order[4]}}</td>
+                    <td>
+                        {% if order[5] == 'normal' %}
+                        <span class="badge rounded-pill text-bg-warning">Low</span> {% else %}
+                        <span class="badge rounded-pill text-bg-danger">High</span> {% endif %}
+                    </td>
+                    <td>{{order[6]}}</td>
+                    <td>
+                        <a role="button" class="btn btn-sm btn-success btn-remove-order" data-id="{{token}}" data-token="{{order[0]}}"><i class="bi bi-check2"></i></a>
+                        <a href="/admin/orders/show/{{token}}" role="button" class="btn btn-sm btn-primary"><i
+                                    class="bi bi-eye"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/admin" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a> {% endif %}
+    </div>
 </div>
 
 

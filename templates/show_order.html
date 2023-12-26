@@ -1,54 +1,41 @@
 {% extends 'base.html' %} {% block body %}
 <div class="container my-5">
     <div class="p-3">
-        <h3 class="fw-normal fs-4">Token #{{order_id}}</h3>
+        <h3 class="fw-normal fs-4">Token #{{data[order_id|int][0]}}</h3>
         <hr class="mb-4">
-        <p class="mb-4 fw-light">Proceed the list of following orders.</p>
+        <p class="mb-1 lead"><b>Name:</b> {{data[order_id|int][2]}}</p>
+        <p class="mb-1 lead"><b>Priority:</b> {% if data[order_id|int] == 'normal' %}
+            <span class="badge rounded-pill text-bg-warning">Low</span> {% else %}
+            <span class="badge rounded-pill text-bg-danger">High</span> {% endif %}
+        </p>
+        <p class="mb-1 lead"><b>Phone:</b> {{data[order_id|int][4]}}</p>
+        <p class="mb-1 lead"><b>Email:</b> {{data[order_id|int][3]}}</p>
     </div>
-    <!-- {% for i, j in data.items() %} {{j}} {% endfor %} -->
-    {{data}}
-    <table class="table table-hover">
-        <thead>
-            <tr class="text-center">
-                <th scope="col"># Token</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Time</th>
-                <!-- Delivered tick -->
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            {% for token, order in data.items() %}
-            <tr class="text-center">
-                <th scope="row"># {{token}}</th>
-                <td>{{order[2]}}</td>
-                <td>{{order[3]}}</td>
-                <td>{{order[4]}}</td>
-                <td>
-                    {% if order[5] == 'normal' %}
-                    <span class="badge rounded-pill text-bg-warning">Low</span> {% else %}
-                    <span class="badge rounded-pill text-bg-danger">High</span> {% endif %}
-                </td>
-                <td>{{order[6]}}</td>
-                <td>
-                    <a role="button" class="btn btn-sm btn-success btn-remove-order" data-id="{{token}}"><i class="bi bi-check2"></i></a>
-                    <a href="/admin/orders/show/{{token}}" role="button" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                <img src="{{ url_for('static', filename='eazycart-logo.svg') }}" width="30" height="24">
-            </a>
-            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 HFC   , Inc</span>
+    <p class="lead px-3"><i class="bi bi-arrow-right me-2"></i>Here is the list of dishes to prepare!</p>
+    <div class="table-responsive p-3">
+        <table class="table table-hover mb-3">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for name, qty in data[order_id|int][1].items() %}
+                <tr class="text-center">
+                    <td>{{name}}</td>
+                    <td>{{qty}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+            <a href="/admin/orders" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a>
+            <a href="/admin/orders" role="button" class="btn btn-remove-order btn-outline-success" data-id="{{order_id}}" data-token="{{data[order_id|int][0]}}" data-show="true">
+                <i class="bi bi-clock-history me-2"></i>Deliver</a>
         </div>
-    </footer>
+    </div>
+
 </div>
 
 
