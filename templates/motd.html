@@ -10,50 +10,52 @@
         <h3 class="fw-normal fs-4">{{ct}}</h3>
         <hr class="mb-3">
         <ul class="list-group list-group-flush">
-            {% for i, j in items.items() %}
-                {% if i|capitalize == ct %}
-                    {% if j|length == 0 %}
-                        <p class="text-danger mb-5">No items found!</p>
-                    {% else %}
-                    <li class="list-group-item">
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-4 m-0">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2" scope="col">Items</th>
-                                        <th class="text-center" colspan="2" scope="col">Price</th>
-                                        <th class="text-center" colspan="2" scope="col">Availability</th>
-                                        <th class="text-center" colspan="2" scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in j %}
-                                    <tr class="menu-item fade show">
-                                        <td class="item-name" colspan="2">{{item[0]}}</td>
-                                        <td class="item-price text-center" colspan="2">
-                                            <span class="badge text-bg-secondary">₹{{item[1]}}</span>
-                                        </td>
-                                        <td class="item-avail text-center" colspan="2">
-                                            {% if item[4] == True %}
-                                            <span class="badge text-bg-success">Available</span>
-                                            {% else %}
-                                            <span class="badge text-bg-danger">Not Available</span>
-                                            {% endif %}
-                                        </td>
-                                        <td class="item-action text-center" colspan="2">
-                                            <button class="btn btn-sm btn-outline-primary btn-add-item-motd" data-name="{{item[0]}}"
-                                                data-category="{{i|lower}}" data-image="{{item[3]}}"><i
-                                                    class="bi bi-plus-circle me-2"></i>Add</button>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </li>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+            {% for i, j in items.items() %} {% if i|capitalize == ct %} {% if j|length == 0 %}
+            <p class="text-danger mb-5">No items found!</p>
+            {% else %}
+            <li class="list-group-item">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-4 m-0">
+                        <thead>
+                            <tr>
+                                <th colspan="2" scope="col">Items</th>
+                                <th class="text-center" colspan="2" scope="col">Price</th>
+                                <th class="text-center" colspan="2" scope="col">Availability</th>
+                                <th class="text-center" colspan="2" scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in j %}
+                            <tr class="menu-item fade show">
+                                <td class="item-name" colspan="2">{{item[0]}}</td>
+                                <td class="item-price text-center" colspan="2">
+                                    <span class="badge text-bg-secondary">₹{{item[1]}}</span>
+                                </td>
+                                <td class="item-avail text-center" colspan="2">
+                                    {% if item[4] == True %}
+                                    <span class="badge text-bg-success">Available</span> {% else %}
+                                    <span class="badge text-bg-danger">Not Available</span> {% endif %}
+                                </td>
+                                <td class="item-action text-center" colspan="2">
+                                    <button class="btn btn-sm {% if item[0] in motd[i|capitalize]|map(attribute='name') %}btn-success{% else %}btn-outline-primary{% endif %} btn-add-item-motd" data-name="{{item[0]}}" data-price="{{item[1]}}" data-desc="{{item[2]}}" data-avail="{{item[4]}}"
+                                        data-category="{{i|lower}}" data-image="{{item[3]}}" {% if item[0] in motd[i|capitalize]|map(attribute='name' ) %}{% endif %}>
+                                    {% if item[0] in motd[i|capitalize]|map(attribute='name') %}
+                                    <i class="bi bi-check2 me-2"></i>Added
+                                    {% else %}
+                                    <i class="bi bi-plus-circle me-2"></i>Add
+                                    {% endif %}
+                                </button>
+                                </td>
+
+
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            {% endif %} {% endif %} {% endfor %}
         </ul>
         {% endfor %}
         <a href="/admin" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a>
