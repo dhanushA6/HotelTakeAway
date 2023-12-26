@@ -199,7 +199,6 @@ def push_orders(order):
 def create_order(cust_obj):
     cart_obj = load_cart()
     cart_dict = cart_obj.get_cart_items()
-    add_subscriber(cust_obj)
     new_order = OrderFactory.create_order(cart_dict, cust_obj)
     return new_order
 
@@ -473,7 +472,8 @@ def remove_order_data(key_to_remove: int):
         for index in range(n) :
             order = orders_list[index]
             if order.token == token:
-                value = orders_list.pop(index)     
+                value = orders_list.pop(index) 
+                add_subscriber(value.customer)    
                 print(value)
                 break
         with open('order.pkl', 'wb') as file:
