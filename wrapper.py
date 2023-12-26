@@ -262,7 +262,7 @@ def get_orders_list():
     except FileNotFoundError:
         # If file doesn't exist, create a new cart object
         print("No Order is Created")
-        return False
+        return []
     
 def create_customer(name, ph_no, email):
     return Customer(name, ph_no, email)
