@@ -31,7 +31,7 @@
         </table>
         <div class="d-flex justify-content-between">
             <a href="/admin/orders" role="button" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-2"></i>Go Back</a>
-            <a href="/admin/orders" role="button" class="btn btn-remove-order btn-outline-success" data-id="{{order_id}}" data-token="{{data[order_id|int][0]}}" data-show="true">
+            <a href="/admin/orders" role="button" class="btn btn-remove-order btn-outline-success" data-id="{{order_id}}" data-token="{{data[order_id|int][0]}}" data-name="{{data[order_id|int][2]}}" data-email="{{data[order_id|int][3]}}" data-show="true">
                 <i class="bi bi-clock-history me-2"></i>Deliver</a>
         </div>
     </div>
