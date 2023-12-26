@@ -463,7 +463,8 @@ def remove_order_data(key_to_remove: int):
                 file.close()
         except Exception:
             tokens = []  
-        tokens.remove(token)
+        if token in tokens:
+            tokens.remove(token)
 
         del data[key_to_remove]
         print(f"Order with key {key_to_remove} is Removed")
