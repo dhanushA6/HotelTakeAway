@@ -350,6 +350,7 @@ $('.btn-remove-order').on('click', function(e) {
                             window.location.pathname = "/admin/orders"
                         } else {
                             p1.remove();
+                            location.reload();
                         }
                     },
                     error: function(error) {
