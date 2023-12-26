@@ -314,6 +314,7 @@ $('.btn-remove-menu-item').on('click', function() {
     d.show();
 });
 
+// Remove order
 $('.btn-remove-order').on('click', function(e) {
     e.preventDefault();
     var $this = $(this);
@@ -324,7 +325,9 @@ $('.btn-remove-order').on('click', function(e) {
 
     data = {
         "order_id": parseInt(order_id),
-        "token_id": parseInt(token_id)
+        "token_id": parseInt(token_id),
+        "name": $this.data('name'),
+        "email": $this.data('email')
     }
 
     d = new Dialog('Confirm deliver', 'Are you sure want to deliver <b>#' + token_id + '</b>?');
