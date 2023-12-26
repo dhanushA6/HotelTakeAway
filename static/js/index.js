@@ -330,7 +330,9 @@ $('.btn-remove-order').on('click', function(e) {
         "email": $this.data('email')
     }
 
-    d = new Dialog('Confirm deliver', 'Are you sure want to deliver <b>#' + token_id + '</b>?');
+    d = new Dialog('Deliver Confirm', 'Are you sure want to deliver token <b>#' + token_id + '</b>?');
+    var modal = d.clone
+    var modal_footer = modal.find('.modal-footer');
     d.setButtons([{
             'name': "Cancel",
             "class": "btn-secondary",
@@ -342,26 +344,33 @@ $('.btn-remove-order').on('click', function(e) {
             'name': "Deliver",
             "class": "btn-success",
             "onClick": function(event) {
+                var success = modal_footer.find('.btn-success');
+
+                success.addClass('disabled');
+                success.html('<div class="spinner-border spinner-border-sm text-body me-2" role="status"></div> Delivering..');
+
                 $.ajax({
                     url: "/api/order/remove",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     success: function() {
-                        console.log("removed order!");
                         if (is_show == true) {
                             window.location.pathname = "/admin/orders"
                         } else {
                             p1.remove();
                             location.reload();
                         }
+                        $(event.data.modal).modal('hide');
                     },
                     error: function(error) {
                         console.error(error);
+                        var success = modal_footer.find('.btn-success');
+                        success.removeClass('btn-success');
+                        success.addClass('btn-danger');
+                        success.html('Cannot deliver mail!')
                     }
                 });
-
-                $(event.data.modal).modal('hide')
             }
         }
     ]);
