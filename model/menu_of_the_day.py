@@ -1,5 +1,5 @@
 import pickle
-
+import wrapper as wp
 class Menu:
     def __init__(self):
         self.items = []
@@ -25,6 +25,20 @@ class MenuBuilder:
             self.menus[menu_type].add_item(item)
         else:
             print(f"Menu type '{menu_type}' not found.")
+            
+    def remove_menu(self, item_remove):
+        cateogry = item_remove.category.capitalize()
+        menus = self.menus[cateogry].get_items()
+        for item in menus:
+            if item.name.lower() == item_remove.lower():
+                menus.remove(item)
+                self.menus[cateogry].items = menus
+                self.save_to_pickle("menus.pickle")
+                return True
+                break
+        return False
+        
+        
 
     def get_menu_items(self, menu_type):
         if menu_type in self.menus:
@@ -41,30 +55,3 @@ class MenuBuilder:
         with open(filename, 'rb') as file:
             self.menus = pickle.load(file)
 
-# # Usage
-# builder = MenuBuilder()
-# builder.add_to_menu('Breakfast', 'Cereal')
-# builder.add_to_menu('Breakfast', 'Omelette')
-# builder.add_to_menu('Lunch', 'Chicken Sandwich')
-# builder.add_to_menu('Lunch', 'Pasta')
-# builder.add_to_menu('Snacks', 'Chips')
-# builder.add_to_menu('TodayMenu', 'Chef Special')
-# builder.add_to_menu('Dinner', 'Steak')
-
-# # Save to pickle file
-# # builder.save_to_pickle('menu_data.pickle')
-
-# # Create a new instance of MenuBuilder
-# builder = MenuBuilder()
-# builder.load_from_pickle('menu_data.pickle')
-# builder.add_to_menu("Breakfast", "Vadai")
-# builder.save_to_pickle('menu_data.pickle')
-# new_builder = MenuBuilder()
-# # Load data from the pickle file
-# new_builder.load_from_pickle('menu_data.pickle')
-
-# # Get items for a specific menu type after loading from pickle
-# breakfast_menu = new_builder.get_menu_items('Breakfast')
-# print("Breakfast Menu:", breakfast_menu)
-
-# # ... similarly for other menu types

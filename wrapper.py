@@ -447,7 +447,7 @@ def remove_order_data(key_to_remove: int):
         for index in range(n) :
             order = orders_list[index]
             if order.token == token:
-                value = orders_list.pop(index)
+                value = orders_list.pop(index)     
                 print(value)
                 break
         with open('order.pkl', 'wb') as file:
@@ -487,7 +487,7 @@ def add_item_to_todayMenu(item_add, menu_type):
     print("Item Added to the Today Menu SuccessFully..")
     return True
 
-def get_todaymenu(menu_type):
+def get_todaymenu():
     new_builder = MenuBuilder()
     try:
         new_builder.load_from_pickle('todaymenu.pickle')
