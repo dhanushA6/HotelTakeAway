@@ -439,8 +439,21 @@ def show_orders_data():
 def remove_order_data(key_to_remove: int):
     data = show_orders_data()
     if key_to_remove in data:
+        token = data[key_to_remove][0]
         del data[key_to_remove]
         print(f"Order with key {key_to_remove} is Removed")
+        orders_list = get_orders_list()
+        n = len(orders_list)
+        for index in range(n) :
+            order = orders_list[index]
+            if order.token == token:
+                value = orders_list.pop(index)
+                print(value)
+                break
+        with open('order.pkl', 'wb') as file:
+            pickle.dump(orders_list, file)
+            print('Order Added Successfully')
+            file.close()
         return True
     print(f"Key {key_to_remove} is not valid ")
     return False

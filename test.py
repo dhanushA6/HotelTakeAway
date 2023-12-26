@@ -30,8 +30,9 @@ import pickle
 # obj.notify_observers("Biriyani")
 
 data = wp.show_orders_data()
+print(data)
 wp.remove_order_data(1000)
+print(wp.show_orders_data())
 
-# print(data)
 
 
