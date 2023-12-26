@@ -37,8 +37,9 @@
                                     <span class="badge text-bg-danger">Not Available</span> {% endif %}
                                 </td>
                                 <td class="item-action text-center" colspan="2">
-                                    <button class="btn btn-sm {% if item[0] in motd[i|capitalize]|map(attribute='name') %}btn-success{% else %}btn-outline-primary{% endif %} btn-add-item-motd" data-name="{{item[0]}}" data-price="{{item[1]}}" data-desc="{{item[2]}}" data-avail="{{item[4]}}"
-                                        data-category="{{i|lower}}" data-image="{{item[3]}}" {% if item[0] in motd[i|capitalize]|map(attribute='name' ) %}{% endif %}>
+                                    <button class="btn btn-sm {% if item[0] in motd[i|capitalize]|map(attribute='name') %}btn-success{% else %}btn-outline-primary{% endif %} btn-add-item-motd" {% if item[0] in motd[i|capitalize]|map(attribute='name' ) %}data-status="true" {% else %} data-status="false"
+                                        {% endif %} data-name="{{item[0]}}" data-price="{{item[1]}}" data-desc="{{item[2]}}" data-avail="{{item[4]}}" data-category="{{i|lower}}" data-image="{{item[3]}}" {% if item[0] in motd[i|capitalize]|map(attribute='name'
+                                        ) %}{% endif %}>
                                     {% if item[0] in motd[i|capitalize]|map(attribute='name') %}
                                     <i class="bi bi-check2 me-2"></i>Added
                                     {% else %}

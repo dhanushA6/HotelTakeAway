@@ -537,27 +537,16 @@ def get_todaymenu():
     return menus
 
 def remove_menu(item_remove):
-        try:
-            with open("todaymenu.pickle", 'rb') as file:
-                builder = pickle.load(file)
-        except Exception:
-                builder = MenuBuilder()
-        builder.remove_menu(item_remove)
-        try:
-            with open("todaymenu.pickle", 'wb') as file:
-                builder = pickle.dump(builder, file)
-        except Exception:
-                print("Exception Occured")
-
-#------------------------------------------- end of the Menu of the day------ ----------
-
-
-
-
-    
-
-
-
-
-
+    try:
+        with open("todaymenu.pickle", 'rb') as file:
+            builder = pickle.load(file)
+    except Exception:
+            builder = MenuBuilder()
+    builder.remove_menu(item_remove)
+    try:
+        with open("todaymenu.pickle", 'wb') as file:
+            builder = pickle.dump(builder, file)
+    except Exception:
+            print("Exception Occured")
+    return True
 

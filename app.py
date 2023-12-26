@@ -238,10 +238,15 @@ def motd_toggle():
         image = data['image']
         avail = data['avail']
         category = data['category']
+        status = str(data['status'])
         
         # Add to motd
         obj = wp.create_item(name, price, desc, image, category, avail)
-        result = wp.add_item_to_todayMenu(obj, category)
+        print(status)
+        if status == 'False':
+            result = wp.add_item_to_todayMenu(obj, category)
+        else:
+            result = wp.remove_menu(obj)
         
         if result:
             return jsonify({'result': result})

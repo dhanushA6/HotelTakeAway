@@ -385,3 +385,48 @@ $('.btn-remove-order').on('click', function(e) {
     ]);
     d.show();
 });
+
+// Add menu of the day item
+$('.btn-add-item-motd').on('click', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var name = $this.data('name');
+    var price = $this.data('price');
+    var desc = $this.data('desc');
+    var image = $this.data('image');
+    var avail = $this.data('avail');
+    var category = $this.data('category');
+
+    var btnStatus = $this.data('status');
+
+    data = {
+        "name": name,
+        "price": parseInt(price),
+        "desc": desc,
+        "image": image,
+        "avail": avail,
+        "category": category,
+        "status": btnStatus
+    }
+
+    $.ajax({
+        url: "/api/motd/toggle",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function() {
+            if ($this.hasClass('btn-outline-primary')) {
+                $this.removeClass('btn-outline-primary')
+                $this.addClass('btn-success');
+                $this.html('<i class="bi bi-check2 me-2"></i>Added')
+            } else {
+                $this.removeClass('btn-success')
+                $this.addClass('btn-outline-primary');
+                $this.html('<i class="bi bi-plus-circle me-2"></i>Add')
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+});
