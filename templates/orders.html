@@ -5,6 +5,9 @@
         <hr class="mb-4">
         <p class="mb-4 fw-light">Proceed the list of following orders.</p>
     </div>
+    {% if data|length == 0 %}
+    <p class="text-danger p-3">No orders found!</p>
+    {% else %}
     <table class="table table-hover">
         <thead>
             <tr class="text-center">
@@ -39,6 +42,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top">
         <div class="col-md-4 d-flex align-items-center">
             <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
