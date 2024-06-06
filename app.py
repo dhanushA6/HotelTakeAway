@@ -14,6 +14,7 @@ mail = Mail(app)
 # Configuration of mail
 app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
 app.config['MAIL_PORT'] = os.getenv("MAIL_PORT")
+#dhanushanandhan06@gmail.com
 app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 app.config['MAIL_USE_TLS'] = False
@@ -21,6 +22,7 @@ app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 app.secret_key = os.getenv("APP_SECRET_KEY")
+# app.secret_key = '12345'
 
 ################ App Routes ################
 @app.route('/')
@@ -262,12 +264,13 @@ def chk_sess_var(variables: list):
     else:
         return False
     
+
 def send_invoice_email(user, token, total, cart_items, order_dt):
     
     body = f"Invoice #{token} for Your Recent Orders via HFC"
     msg = Message( 
                     body,
-                    sender ='noreply@gmail.com',
+                    sender ='dhanushanandhan06@gmail.com',
                     recipients = [f'{user[2]}'] 
                 ) 
     view = render_template('mail_invoice.html', user=user, token=token, total=total, items=cart_items, order_dt=order_dt)
@@ -281,7 +284,7 @@ def send_deliver_email(user, email, token):
     body = f"Your HFC Takeaway Order Has Been Delivered!"
     msg = Message( 
                     body,
-                    sender ='noreply@gmail.com',
+                    sender ='dhanushanandhan06@gmail.com',
                     recipients = [f'{email}'] 
                 ) 
     view = render_template('mail_deliver.html', user=user, token=token)
