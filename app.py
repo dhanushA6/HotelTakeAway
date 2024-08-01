@@ -326,5 +326,5 @@ def remove_image(filename: str, category: str):
         print(f"Error: {e}")
         return False
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
